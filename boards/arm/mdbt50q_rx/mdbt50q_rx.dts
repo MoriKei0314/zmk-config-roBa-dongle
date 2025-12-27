@@ -62,14 +62,6 @@
 	pinctrl-names = "default", "sleep";
 };
 
-&i2c0 {
-	compatible = "nordic,nrf-twim";
-	status = "disabled";
-	pinctrl-0 = <&i2c0_default>;
-	pinctrl-1 = <&i2c0_sleep>;
-	pinctrl-names = "default", "sleep";
-};
-
 &spi0 {
 	compatible = "nordic,nrf-spim";
 	status = "disabled";
@@ -78,20 +70,11 @@
 	pinctrl-names = "default", "sleep";
 };
 
-&spi1 {
-	compatible = "nordic,nrf-spim";
-	status = "disabled";
-	pinctrl-0 = <&spi1_default>;
-	pinctrl-1 = <&spi1_sleep>;
-	pinctrl-names = "default", "sleep";
-};
-
 &qspi {
 	status = "disabled";
 };
 
 &usbd {
-	compatible = "nordic,nrf-usbd";
 	status = "okay";
 };
 
@@ -101,25 +84,21 @@
 		#address-cells = <1>;
 		#size-cells = <1>;
 
-		/* Adafruit Bootloader: 0x00000000 - 0x0000FFFF (64 KB) */
 		bootloader_partition: partition@0 {
 			label = "adafruit_bootloader";
 			reg = <0x00000000 0x00010000>;
 		};
 
-		/* nRF52840 SoftDevice S140 v7.x: 0x00010000 - 0x00026FFF (92 KB) */
 		sd_partition: partition@10000 {
 			label = "softdevice";
 			reg = <0x00010000 0x00017000>;
 		};
 
-		/* ZMK Application Code: 0x00027000 - 0x000FF000 (832 KB) */
 		code_partition: partition@27000 {
 			label = "code_partition";
 			reg = <0x00027000 0x000D9000>;
 		};
 
-		/* Storage for ZMK settings: 0x000FF000 - 0x000FFFFF (4 KB) */
 		storage_partition: partition@ff000 {
 			label = "storage";
 			reg = <0x000FF000 0x00001000>;
