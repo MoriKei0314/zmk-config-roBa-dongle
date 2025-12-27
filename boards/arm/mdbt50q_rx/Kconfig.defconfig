@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_MDBT50Q_RX
+
+config BOARD
+    default "mdbt50q_rx"
+
+config SOC
+    default "NRF52840_QIAA"
+
+config BOARD_ENABLE_DCDC
+    default y
+
+# GPIO
+config GPIO
+    default y
+
+# UART for logging
+config SERIAL
+    default y
+
+config UART_CONSOLE
+    default y
+
+config UART_1
+    default y
+
+# SPI (optional, for future use)
+config SPI
+    default n
+
+# I2C (optional, for future use)
+config I2C
+    default n
+
+# USB
+config USB_NRFX
+    default y
+
+config USB_DEVICE_STACK
+    default y
+
+endif
