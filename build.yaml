@@ -6,5 +6,5 @@ include:
     shield: roBa_L
   - board: seeeduino_xiao_ble
     shield: settings_reset
-  - board: mdbt50q_rx
+  - board: raytac_mdbt50q_db_40_nrf52840
     shield: roBa_dongle
