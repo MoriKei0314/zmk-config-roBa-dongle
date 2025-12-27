@@ -11,36 +11,25 @@ config SOC
 config BOARD_ENABLE_DCDC
     default y
 
-# GPIO
 config GPIO
     default y
 
-# UART for logging
 config SERIAL
     default y
 
 config UART_CONSOLE
     default y
 
-# USB
 config USB_NRFX
     default y
 
 config USB_DEVICE_STACK
     default y
 
-# BLE/Bluetooth
 config BT
     default y
 
 config BT_CTLR
     default y
-
-# Optional for future use
-config SPI
-    default n
-
-config I2C
-    default n
 
 endif
