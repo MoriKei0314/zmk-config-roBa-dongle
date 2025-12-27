@@ -7,5 +7,5 @@ include:
   - board: seeeduino_xiao_ble
     shield: settings_reset
   # snippetなしでビルド
-  - board: nrf52840dongle_nrf52840
-    shield: roBa_dongle
+　- board: mdbt50q_rx
+  　shield: roBa_dongle
