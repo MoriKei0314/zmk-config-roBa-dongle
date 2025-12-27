@@ -6,7 +6,7 @@ config BOARD
     default "mdbt50q_rx"
 
 config SOC
-    default "NRF52840_QIAA"
+    default "nrf52840_qiaa"
 
 config BOARD_ENABLE_DCDC
     default y
@@ -22,22 +22,25 @@ config SERIAL
 config UART_CONSOLE
     default y
 
-config UART_1
-    default y
-
-# SPI (optional, for future use)
-config SPI
-    default n
-
-# I2C (optional, for future use)
-config I2C
-    default n
-
 # USB
 config USB_NRFX
     default y
 
 config USB_DEVICE_STACK
     default y
+
+# BLE/Bluetooth
+config BT
+    default y
+
+config BT_CTLR
+    default y
+
+# Optional for future use
+config SPI
+    default n
+
+config I2C
+    default n
 
 endif
