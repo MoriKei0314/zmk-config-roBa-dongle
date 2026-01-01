@@ -56,5 +56,11 @@
         reg = <0>;
         spi-max-frequency = <2000000>;
         irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        motion-gpios = <&gpio0 3 GPIO_ACTIVE_LOW>;
     };
 };
+```
+
+**追加した行：**
+```
+motion-gpios = <&gpio0 3 GPIO_ACTIVE_LOW>;
