@@ -6,5 +6,5 @@ include:
     shield: roBa_L
   - board: seeeduino_xiao_ble
     shield: settings_reset
-  - board: nice_nano_v2        # ← mdbt50q_db_40 から nice_nano_v2 に変更
-    shield: roBa_dongle
+  - board: nice_nano_v2
+    shield: roBa_dongle dongle_display
