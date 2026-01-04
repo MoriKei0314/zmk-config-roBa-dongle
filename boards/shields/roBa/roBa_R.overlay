@@ -57,5 +57,24 @@
         spi-max-frequency = <2000000>;
         irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        
+        zephyr,axis-x = <&test_x_input>;
+        zephyr,axis-y = <&test_y_input>;
+    };
+};
+
+/ {
+    test_x_input: test_x_input {
+        compatible = "zmk,input-mock";
+        x {
+            zephyr,input-code = <INPUT_REL_X>;
+        };
+    };
+
+    test_y_input: test_y_input {
+        compatible = "zmk,input-mock";
+        y {
+            zephyr,input-code = <INPUT_REL_Y>;
+        };
     };
 };
