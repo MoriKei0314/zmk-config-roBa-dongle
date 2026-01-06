@@ -1,22 +1,26 @@
+# R側の設定：Central記述を削除し、純粋なPeripheral（子機）にします
 if SHIELD_ROBA_R
-
 config ZMK_KEYBOARD_NAME
     default "roBa_R"
-
 config ZMK_SPLIT
     default y
-
-config ZMK_SPLIT_ROLE_CENTRAL
-    default y
-
 endif
 
+# L側の設定：変更なし
 if SHIELD_ROBA_L
-
 config ZMK_KEYBOARD_NAME
     default "roBa_L"
-
 config ZMK_SPLIT
     default y
-
 endif
+
+# ▼▼▼ ドングル設定を追加（ここが新しい親機になります） ▼▼▼
+if SHIELD_ROBA_DONGLE
+config ZMK_KEYBOARD_NAME
+    default "roBa_Dongle"
+config ZMK_SPLIT
+    default y
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+endif
+
