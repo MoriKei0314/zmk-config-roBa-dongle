@@ -1,6 +1,4 @@
 cat <<EOF > boards/shields/roBa/roBa_dongle.overlay
-#include <dt-bindings/zmk/matrix_transform.h>
-
 / {
     chosen {
         zmk,kscan = &mock_kscan;
@@ -12,7 +10,7 @@ cat <<EOF > boards/shields/roBa/roBa_dongle.overlay
         compatible = "zmk,matrix-transform";
         columns = <1>;
         rows = <1>;
-        map = <RC(0,0)>;
+        map = <0>;
     };
 
     mock_kscan: kscan_0 {
