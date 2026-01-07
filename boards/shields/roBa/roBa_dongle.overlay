@@ -1,5 +1,3 @@
-# シンプルな構成で新規作成
-cat <<EOF > boards/shields/roBa/roBa_dongle.overlay
 / {
     chosen {
         zmk,kscan = &mock_kscan;
@@ -40,4 +38,3 @@ cat <<EOF > boards/shields/roBa/roBa_dongle.overlay
         prechargep = <0x22>;
     };
 };
-EOF
