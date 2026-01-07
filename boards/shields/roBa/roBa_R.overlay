@@ -4,26 +4,10 @@
     col-offset = <6>;
 };
 
-&kscan0 {
-    col-gpios
-        = <&xiao_d 4 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 5 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 10 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 9 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 8 GPIO_ACTIVE_HIGH>
-        ;
-};
-
-&xiao_spi {
-    status = "okay";
-    cs-gpios = <&xiao_d 3 GPIO_ACTIVE_LOW>;
-
-    trackball: trackball@0 {
-        compatible = "pixart,pmw3610";
-        reg = <0>;
-        spi-max-frequency = <2000000>;
-        /* 新しいドライバーでは irq-gpios ではなく motion-gpios が必要です */
-        motion-gpios = <&xiao_d 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        scroll-layers = <1>;
-    };
+/* 既存のtrackball定義を参照して修正します */
+&trackball {
+    /* 古いプロパティを削除 */
+    /delete-property/ irq-gpios;
+    /* 新しいプロパティを追加 */
+    motion-gpios = <&xiao_d 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 };
