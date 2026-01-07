@@ -18,6 +18,12 @@
         rows = <1>;
         events = <0>;
     };
+
+    /* キーマップのエラー回避用ダミー */
+    trackball: virtual_input {
+        compatible = "zmk,virtual-input";
+        status = "disabled";
+    };
 };
 
 &pro_micro_i2c {
