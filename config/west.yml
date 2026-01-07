@@ -1,16 +1,20 @@
+# west.yml を上書きしてドライバーを変更
+cat <<EOF > config/west.yml
 manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: kumamuk-git
-      url-base: https://github.com/kumamuk-git
+    - name: shnoo
+      url-base: https://github.com/shnoo
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: v0.3-branch
+      revision: main
       import: app/west.yml
     - name: zmk-pmw3610-driver
-      remote: kumamuk-git
+      remote: shnoo
       revision: main
   self:
     path: config
+EOF
+
