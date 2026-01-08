@@ -6,7 +6,7 @@
         zmk,matrix_transform = &default_transform;
     };
 
-    /* ▼▼▼ キー配置の定義（これがないと入力できません） ▼▼▼ */
+    /* ▼▼▼ roBa.dtsi からコピーしたキー配置定義 ▼▼▼ */
     default_transform: keymap_transform_0 {
         compatible = "zmk,matrix-transform";
         columns = <11>;
@@ -19,13 +19,16 @@
         >;
     };
 
+    /* ▼▼▼ ここを修正しました（0 -> 11, 4） ▼▼▼ */
+    /* キー配置に合わせてサイズを指定することでエラーを防ぎます */
     mock_kscan: kscan_0 {
         compatible = "zmk,kscan-mock";
-        columns = <0>;
-        rows = <0>;
+        columns = <11>;
+        rows = <4>;
         events = <0>;
     };
 
+    /* Keymapエラー回避用のダミートラックボール */
     trackball: virtual_input {
         compatible = "zmk,virtual-input";
         status = "disabled";
