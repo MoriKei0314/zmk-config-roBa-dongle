@@ -8,7 +8,6 @@
     };
 
     /* ▼▼▼ roBa.dtsi からコピーしたキー配置定義 ▼▼▼ */
-    /* ※ここを変更する必要があるのは、物理的にスイッチの配線を変えた時だけです */
     default_transform: keymap_transform_0 {
         compatible = "zmk,matrix-transform";
         columns = <11>;
@@ -20,7 +19,6 @@
             RC(3,0) RC(3,1) RC(3,2) RC(3,3) RC(3,4) RC(3,5)     RC(3,8) RC(3,9)                         RC(3,10)
         >;
     };
-    /* ▲▲▲ コピーここまで ▲▲▲ */
 
     mock_kscan: kscan_0 {
         compatible = "zmk,kscan-mock";
@@ -29,7 +27,6 @@
         events = <0>;
     };
 
-    /* Keymapエラー回避用のダミートラックボール */
     trackball: virtual_input {
         compatible = "zmk,virtual-input";
         status = "disabled";
