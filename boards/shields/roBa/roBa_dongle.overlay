@@ -1,28 +1,23 @@
+/* roBa.dtsi（本体の定義）を読み込むことで、マトリックス変換を自動同期させます */
+#include "roBa.dtsi"
+
 / {
     chosen {
+        /* 本体定義のkscan（実際のキースイッチ）は無視して、ダミーを使います */
         zmk,kscan = &mock_kscan;
+        /* 本体定義にある default_transform をそのまま使います */
         zmk,matrix_transform = &default_transform;
         zephyr,display = &oled;
     };
 
-    /* ▼▼▼ ここに roBa.dtsi からコピーした内容を貼り付けます ▼▼▼ */
-    default_transform: keymap_transform_0 {
-        compatible = "zmk,matrix-transform";
-        columns = <...>;
-        rows = <...>;
-        map = <
-            ... (長いデータ) ...
-        >;
-    };
-    /* ▲▲▲ 貼り付けここまで ▲▲▲ */
-
     mock_kscan: kscan_0 {
         compatible = "zmk,kscan-mock";
-        columns = <1>; // ここはそのままでOK
-        rows = <1>;    // ここはそのままでOK
+        columns = <0>;
+        rows = <0>;
         events = <0>;
     };
 
+    /* Keymapエラー回避用のダミートラックボール */
     trackball: virtual_input {
         compatible = "zmk,virtual-input";
         status = "disabled";
@@ -30,9 +25,20 @@
 };
 
 &pro_micro_i2c {
-    /* ... OLEDの設定 ... */
     status = "okay";
+
     oled: ssd1306@3c {
-        /* ... 省略 ... */
+        compatible = "solomon,ssd1306fb";
+        reg = <0x3c>;
+        width = <128>;
+        height = <64>;
+        segment-offset = <0>;
+        page-offset = <0>;
+        display-offset = <0>;
+        multiplex-ratio = <63>;
+        segment-remap;
+        com-invdir;
+        com-sequential;
+        prechargep = <0x22>;
     };
 };
