@@ -19,18 +19,19 @@
         >;
     };
 
-    /* キー配置に合わせてサイズを指定（11列4行） */
-    mock_kscan: kscan_0 {
+    /* キー配置に合わせてサイズを指定 */
+    /* ラベルを複数つけて参照エラーを防ぎます */
+    mock_kscan: kscan0: kscan_0 {
         compatible = "zmk,kscan-mock";
         columns = <11>;
         rows = <4>;
         events = <0>;
     };
 
-    /* ▼▼▼ これが不足していたためエラーになっていました ▼▼▼ */
-    /* キーマップが参照しているトラックボールの定義（ダミー） */
+    /* ▼▼▼ ここを修正しました（disabled -> okay） ▼▼▼ */
+    /* キーマップが参照してもエラーにならないよう有効化します */
     trackball: virtual_input {
         compatible = "zmk,virtual-input";
-        status = "disabled";
+        status = "okay";
     };
 };
