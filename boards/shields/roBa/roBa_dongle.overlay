@@ -28,7 +28,6 @@
         events = <0>;
     };
 
-    /* ▼▼▼ ここを修正しました（disabled -> okay） ▼▼▼ */
     /* キーマップが参照してもエラーにならないよう有効化します */
     trackball: virtual_input {
         compatible = "zmk,virtual-input";
