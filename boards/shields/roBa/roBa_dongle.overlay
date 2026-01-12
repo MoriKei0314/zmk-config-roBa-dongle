@@ -2,7 +2,7 @@
 
 / {
     chosen {
-        zmk,kscan = &mock_kscan;
+        zmk,kscan = &kscan0;
         zmk,matrix_transform = &default_transform;
     };
 
@@ -19,17 +19,16 @@
         >;
     };
 
-    /* ▼▼▼ 修正箇所：Mock KSCANに戻します ▼▼▼ */
-    /* サイズを11列4行に合わせることで、キーボードとして正常に認識させます */
-    mock_kscan: kscan_0 {
-        compatible = "zmk,kscan-mock";
+    /* ▼▼▼ 修正箇所：Composite KSCAN（空っぽの箱）を使用 ▼▼▼ */
+    kscan0: kscan_0 {
+        compatible = "zmk,kscan-composite";
         label = "KSCAN";
         rows = <4>;
         columns = <11>;
-        events = <0>;
+        /* 中身（children）を定義しないことで、入力のない安全なダミーになります */
     };
 
-    /* キーマップの参照エラー回避用（中身はダミー） */
+    /* トラックボール定義（エラー回避用・中身はダミー） */
     trackball: virtual_input {
         compatible = "zmk,virtual-input";
         status = "okay";
