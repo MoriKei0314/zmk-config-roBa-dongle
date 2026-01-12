@@ -2,10 +2,11 @@
 
 / {
     chosen {
-        zmk,kscan = &kscan0;
+        zmk,kscan = &mock_kscan;
         zmk,matrix_transform = &default_transform;
     };
 
+    /* ▼▼▼ 本物のキー配置（roBa.dtsiから移植） ▼▼▼ */
     default_transform: keymap_transform_0 {
         compatible = "zmk,matrix-transform";
         columns = <11>;
@@ -18,15 +19,16 @@
         >;
     };
 
-    /* ▼▼▼ ここを変更しました（mock -> composite） ▼▼▼ */
-    /* 標準ドライバーを使うことで、設定不要で確実に動作させます */
-    kscan0: kscan_composite {
-        compatible = "zmk,kscan-composite";
+    /* キー配置に合わせてサイズを指定 */
+    /* ラベルを複数つけて参照エラーを防ぎます */
+    mock_kscan: kscan0: kscan_0 {
+        compatible = "zmk,kscan-mock";
         columns = <11>;
         rows = <4>;
-        /* 子供のノードは空でOKです */
+        events = <0>;
     };
 
+    /* キーマップが参照してもエラーにならないよう有効化します */
     trackball: virtual_input {
         compatible = "zmk,virtual-input";
         status = "okay";
