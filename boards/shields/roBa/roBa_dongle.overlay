@@ -2,7 +2,7 @@
 
 / {
     chosen {
-        zmk,kscan = &kscan0;
+        zmk,kscan = &mock_kscan;
         zmk,matrix_transform = &default_transform;
     };
 
@@ -19,16 +19,17 @@
         >;
     };
 
-    /* ▼▼▼ 修正箇所：コンポジットKSCANを使用 ▼▼▼ */
-    /* これを使うと、中身が空でも「11列4行の装置です」と嘘をつけるため、フリーズしません */
-    kscan0: kscan_0 {
-        compatible = "zmk,kscan-composite";
+    /* ▼▼▼ 修正箇所：Mock KSCANに戻します ▼▼▼ */
+    /* サイズを11列4行に合わせることで、キーボードとして正常に認識させます */
+    mock_kscan: kscan_0 {
+        compatible = "zmk,kscan-mock";
         label = "KSCAN";
         rows = <4>;
         columns = <11>;
+        events = <0>;
     };
 
-    /* トラックボール定義（変更なし・必須） */
+    /* キーマップの参照エラー回避用（中身はダミー） */
     trackball: virtual_input {
         compatible = "zmk,virtual-input";
         status = "okay";
