@@ -19,36 +19,16 @@
         >;
     };
 
-    /* ▼▼▼ 修正箇所：Ghost Matrix（幽霊マトリクス） ▼▼▼ */
-    /* 標準的なGPIOマトリクスドライバーを使用するため、確実に起動します */
+    /* ▼▼▼ Composite KSCAN（空っぽの箱） ▼▼▼ */
+    /* これが一番安全に「11列4行」を詐称できます */
     kscan0: kscan_0 {
-        compatible = "zmk,kscan-gpio-matrix";
+        compatible = "zmk,kscan-composite";
         label = "KSCAN";
-        diode-direction = "col2row";
-        
-        /* 11本の列ピン（すべてダミーのA0ピンを使用） */
-        col-gpios
-            = <&pro_micro_a 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_a 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_a 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_a 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_a 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_a 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_a 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_a 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_a 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_a 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_a 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
-
-        /* 4本の行ピン（すべてダミーのA1ピンを使用） */
-        row-gpios
-            = <&pro_micro_a 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_a 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_a 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_a 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+        rows = <4>;
+        columns = <11>;
     };
 
-    /* トラックボール定義（エラー回避用） */
+    /* トラックボール定義（必須） */
     trackball: virtual_input {
         compatible = "zmk,virtual-input";
         status = "okay";
