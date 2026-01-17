@@ -2,7 +2,7 @@
 
 / {
     chosen {
-        zmk,kscan = &kscan0;
+        zmk,kscan = &mock_kscan;
         zmk,matrix_transform = &default_transform;
     };
 
@@ -19,33 +19,14 @@
         >;
     };
 
-    /* ▼▼▼ 修正：幽霊マトリクス（Ghost Matrix） ▼▼▼ */
-    /* 物理的に存在しないピンを指定して「普通のキーボード」になりすまします */
-    kscan0: kscan_0 {
-        compatible = "zmk,kscan-gpio-matrix";
-        label = "KSCAN";
-        diode-direction = "col2row";
-        
-        /* 11本の列ピン（すべてダミーのD0ピンを使用） */
-        col-gpios
-            = <&pro_micro_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
-
-        /* 4本の行ピン（すべてダミーのD1ピンを使用） */
-        row-gpios
-            = <&pro_micro_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+    /* ▼▼▼ 修正：シミュレーション（Mock）KSCAN ▼▼▼ */
+    /* 物理ピンを使わないため、ピン競合によるクラッシュが絶対に起きません */
+    /* サイズを11列4行に合わせているため、キーマップエラーも起きません */
+    mock_kscan: kscan_0 {
+        compatible = "zmk,kscan-mock";
+        columns = <11>;
+        rows = <4>;
+        events = <0>;
     };
 
     /* トラックボール定義（必須） */
