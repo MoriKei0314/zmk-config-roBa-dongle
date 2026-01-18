@@ -35,3 +35,6 @@
         status = "okay";
     };
 };
+/* XIAOのピン名をPro Microに読み替える翻訳設定 */
+xiao_d: &pro_micro {};
+gpio0: &gpio0 {};
