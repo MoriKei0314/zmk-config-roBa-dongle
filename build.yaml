@@ -12,6 +12,6 @@ include:
   - board: seeeduino_xiao_ble
     shield: settings_reset
 
-  # ▼▼▼ 修正：ドングルは v2 指定に変更（v1なら nice_nano のままでOK） ▼▼▼
-  - board: nice_nano_v2
+    # ▼▼▼ ドングル (XIAO BLE) ※ここを修正！ ▼▼▼
+  - board: seeeduino_xiao_ble
     shield: roBa_dongle
