@@ -6,7 +6,7 @@
         zmk,matrix_transform = &default_transform;
     };
 
-    /* ▼▼▼ 本物のキー配置（roBa.dtsiと整合性を取る） ▼▼▼ */
+    /* キーマップの形（11列4行）に合わせる */
     default_transform: keymap_transform_0 {
         compatible = "zmk,matrix-transform";
         columns = <11>;
@@ -19,22 +19,17 @@
         >;
     };
 
-    /* ▼▼▼ 修正：Mock KSCAN ▼▼▼ */
-    /* 物理ピンを一切制御しないため、ハードウェアクラッシュを回避できます */
+    /* 物理ピンを使わないシミュレーション（一番安全） */
     mock_kscan: kscan_0 {
         compatible = "zmk,kscan-mock";
         columns = <11>;
         rows = <4>;
-        /* イベント発生は不要ですが、ドライバ初期化のために定義します */
         events = <0>;
     };
 
-    /* トラックボール定義（キーマップエラー回避のため必須） */
+    /* トラックボールの定義 */
     trackball: virtual_input {
         compatible = "zmk,virtual-input";
         status = "okay";
     };
 };
-/* XIAOのピン名をPro Microに読み替える翻訳設定 */
-xiao_d: &pro_micro {};
-gpio0: &gpio0 {};
