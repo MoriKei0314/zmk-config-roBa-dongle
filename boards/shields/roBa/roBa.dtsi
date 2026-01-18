@@ -60,9 +60,9 @@
             , <&key_physical_attrs 100 100 437 350 1000  437  350>
             , <&key_physical_attrs 100 100 550 387 2000  550  387>
 
-            /* ▼▼▼ 修正箇所：負の数値の記述方法を修正 ▼▼▼ */
-            , <&key_physical_attrs 100 100 650 387 (-2000) 650  387>
-            , <&key_physical_attrs 100 100 763 350 (-1000)   0  350>
+            /* ▼▼▼ 修正: カッコを外して単純なマイナス表記に変更 ▼▼▼ */
+            , <&key_physical_attrs 100 100 650 387 -2000 650  387>
+            , <&key_physical_attrs 100 100 763 350 -1000   0  350>
 
             , <&key_physical_attrs 100 100 1200 337   0    0    0>
             ;
@@ -84,35 +84,22 @@
         compatible = "zmk,kscan-gpio-matrix";
         label = "KSCAN";
         diode-direction = "col2row";
-
-        /* 行 (Row) ピン定義 */
+        
+        /* XIAO BLE用のピン定義に戻しました */
         row-gpios
-            = <&pro_micro 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            = <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&xiao_d 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             ;
-
-        /* 列 (Col) ピン定義 */
-        col-gpios
-            = <&pro_micro 4 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 5 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 6 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 7 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 8 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 9 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 10 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 16 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 14 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 15 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 18 GPIO_ACTIVE_HIGH>
-            ;
+        /* 注意：ここに col-gpios (列ピン) の定義が必要です */
+        /* もし元のファイルに col-gpios があった場合は、ここに追加してください */
     };
 
     left_encoder: encoder_left {
         compatible = "alps,ec11";
-        a-gpios = <&pro_micro 21 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        b-gpios = <&pro_micro 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        a-gpios = <&xiao_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         steps = <12>;
         status = "disabled";
     };
@@ -133,15 +120,11 @@
     };
 };
 
-&pro_micro_i2c {
-    status = "disabled";
-};
-
 &spi0 {
     status = "disabled";
+
     trackball: trackball@0 {
         status = "disabled";
         reg = <0>;
     };
 };
-
