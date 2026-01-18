@@ -12,7 +12,6 @@
         transform = <&default_transform>;
         kscan = <&kscan0>;
 
-        /* 物理キー配置定義（変更なし） */
         keys
             = <&key_physical_attrs 100 100   0  37    0    0    0>
             , <&key_physical_attrs 100 100 100  12    0    0    0>
@@ -61,14 +60,14 @@
             , <&key_physical_attrs 100 100 437 350 1000  437  350>
             , <&key_physical_attrs 100 100 550 387 2000  550  387>
 
-            , <&key_physical_attrs 100 100 650 387 -2000 650  387>
-            , <&key_physical_attrs 100 100 763 350 -1000   0  350>
+            /* ▼▼▼ 修正箇所：負の数値の記述方法を修正 ▼▼▼ */
+            , <&key_physical_attrs 100 100 650 387 (-2000) 650  387>
+            , <&key_physical_attrs 100 100 763 350 (-1000)   0  350>
 
             , <&key_physical_attrs 100 100 1200 337   0    0    0>
             ;
     };
 
-    /* マトリクス変換（変更なし） */
     default_transform: keymap_transform_0 {
         compatible = "zmk,matrix-transform";
         columns = <11>;
@@ -81,15 +80,68 @@
         >;
     };
 
-    /* ▼▼▼ 修正箇所：Pro Micro用ピン定義に変更し、Colを追加 ▼▼▼ */
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         label = "KSCAN";
         diode-direction = "col2row";
 
-        /* 行（Rows）: D0, D1, D2, D3 ピンを使用と仮定 */
+        /* 行 (Row) ピン定義 */
         row-gpios
             = <&pro_micro 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&pro_micro 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&pro_micro 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro 3 (
+            , <&pro_micro 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            ;
+
+        /* 列 (Col) ピン定義 */
+        col-gpios
+            = <&pro_micro 4 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 5 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 6 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 7 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 8 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 9 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 10 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 16 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 14 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 15 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 18 GPIO_ACTIVE_HIGH>
+            ;
+    };
+
+    left_encoder: encoder_left {
+        compatible = "alps,ec11";
+        a-gpios = <&pro_micro 21 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&pro_micro 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        steps = <12>;
+        status = "disabled";
+    };
+
+    right_encoder: encoder_right {
+        status = "disabled";
+    };
+
+    sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&left_encoder &right_encoder>;
+        triggers-per-rotation = <10>;
+    };
+
+    trackball_listener: trackball_listener {
+        compatible = "zmk,input-listener";
+        status = "disabled";
+    };
+};
+
+&pro_micro_i2c {
+    status = "disabled";
+};
+
+&spi0 {
+    status = "disabled";
+    trackball: trackball@0 {
+        status = "disabled";
+        reg = <0>;
+    };
+};
+
