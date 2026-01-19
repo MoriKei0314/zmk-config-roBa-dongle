@@ -13,8 +13,8 @@ include:
     snippet: studio-rpc-usb-uart
 
   # ドングル (Nice!Nano v2)
-  # ▼▼▼ 修正：dongle_display を追加して統合 ▼▼▼
-  - board: nice_nano_v2
+  # ▼▼▼ 修正：board名を nice_nano に戻しました ▼▼▼
+  - board: nice_nano
     shield: roBa_dongle dongle_display
 
   # ---------------------------------------
@@ -25,5 +25,6 @@ include:
     shield: settings_reset
 
   # ドングル用 (Nice!Nano v2) のリセット
-  - board: nice_nano_v2
+  # ▼▼▼ 修正：board名を nice_nano に戻しました ▼▼▼
+  - board: nice_nano
     shield: settings_reset
