@@ -19,7 +19,7 @@
         >;
     };
 
-    /* 物理ピンを使わないシミュレーション（一番安全） */
+    /* 物理ピンを使わないシミュレーション */
     mock_kscan: kscan_0 {
         compatible = "zmk,kscan-mock";
         columns = <11>;
@@ -27,9 +27,14 @@
         events = <0>;
     };
 
-    /* トラックボールの定義 */
+    /* トラックボール定義 */
     trackball: virtual_input {
         compatible = "zmk,virtual-input";
         status = "okay";
     };
 };
+
+/* ▼▼▼ 重要：Nice!NanoがXIAOのコードを読めるようにする翻訳機 ▼▼▼ */
+/* これがないとビルドエラーになります */
+xiao_d: &pro_micro {};
+gpio0: &gpio0 {};
