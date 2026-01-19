@@ -15,19 +15,8 @@
 };
 
 &trackball {
-    /* 割り込みピンの設定 */
     /delete-property/ irq-gpios;
     motion-gpios = <&xiao_d 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-
-    /* ▼▼▼ トラックボールの詳細設定 ▼▼▼ */
-    /* 感度設定 (CPI) */
     cpi = <400>;
-    
-    /* 必要に応じてカーソル動作を反転・回転 */
-    /* invert-x; */
-    /* invert-y; */
-    /* swap-xy; */
-    
-    /* スクロール機能の設定 */
     scroll-layers = <1>;
 };
