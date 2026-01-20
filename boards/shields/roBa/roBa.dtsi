@@ -11,8 +11,7 @@
         display-name = "Default";
         transform = <&default_transform>;
         kscan = <&kscan0>;
-        /* ビルドエラー回避のため、物理キー配置データ(keys)は削除しました */
-        /* これにより文字入力機能に影響が出ることはありません */
+        /* ビルドエラー回避のためkeysは削除済み */
     };
 
     default_transform: keymap_transform_0 {
@@ -39,7 +38,17 @@
             , <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&xiao_d 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             ;
-        /* 列（Col）の定義は左右のOverlayファイルで行います */
+
+        /* ▼▼▼ 重要：左手用の列（Col）定義を復活させました ▼▼▼ */
+        /* これがないと左手が反応しなくなる恐れがあります */
+        col-gpios
+            = <&xiao_d 4 GPIO_ACTIVE_HIGH>
+            , <&xiao_d 5 GPIO_ACTIVE_HIGH>
+            , <&xiao_d 10 GPIO_ACTIVE_HIGH>
+            , <&xiao_d 9 GPIO_ACTIVE_HIGH>
+            , <&xiao_d 8 GPIO_ACTIVE_HIGH>
+            /* 必要に応じてピンを追加してください */
+            ;
     };
 
     left_encoder: encoder_left {
@@ -71,5 +80,6 @@
     trackball: trackball@0 {
         status = "disabled";
         reg = <0>;
+        /* ▼▼▼ automouse-layer はここで完全に削除しました ▼▼▼ */
     };
 };
