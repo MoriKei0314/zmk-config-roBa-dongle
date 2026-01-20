@@ -1,5 +1,4 @@
 #include "roBa.dtsi"
-/* マウス入力用の辞書読み込み */
 #include <dt-bindings/input/input-event-codes.h>
 
 &default_transform {
@@ -50,11 +49,11 @@
         spi-max-frequency = <2000000>;
         motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 
-        /* マウスのX軸・Y軸設定 */
+        /* 必須：マウスのX軸・Y軸設定 */
         zephyr,axis-x = <INPUT_REL_X>;
         zephyr,axis-y = <INPUT_REL_Y>;
 
-        /* ▼▼▼ 削除命令1：ここでも消す ▼▼▼ */
+        /* エラー対策：古いプロパティを強制削除 */
         /delete-property/ automouse-layer;
     };
 };
@@ -65,9 +64,4 @@
         compatible = "zmk,input-listener";
         device = <&trackball>;
     };
-};
-
-/* ▼▼▼ 削除命令2：最後にダメ押しで消す（最も強力） ▼▼▼ */
-&trackball {
-    /delete-property/ automouse-layer;
 };
