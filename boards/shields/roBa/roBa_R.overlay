@@ -1,4 +1,5 @@
 #include "roBa.dtsi"
+/* マウス入力用の辞書読み込み */
 #include <dt-bindings/input/input-event-codes.h>
 
 &default_transform {
@@ -52,6 +53,9 @@
         /* マウスのX軸・Y軸設定 */
         zephyr,axis-x = <INPUT_REL_X>;
         zephyr,axis-y = <INPUT_REL_Y>;
+
+        /* ▼▼▼ 削除命令1：ここでも消す ▼▼▼ */
+        /delete-property/ automouse-layer;
     };
 };
 
@@ -63,8 +67,7 @@
     };
 };
 
-/* ▼▼▼ ここが重要：最後に確実に削除を実行します ▼▼▼ */
+/* ▼▼▼ 削除命令2：最後にダメ押しで消す（最も強力） ▼▼▼ */
 &trackball {
     /delete-property/ automouse-layer;
-    /* もし scroll-layers もエラーになる場合は、ここに追加します */
 };
