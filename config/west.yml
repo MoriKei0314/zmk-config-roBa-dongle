@@ -11,11 +11,11 @@ manifest:
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    # ▼▼▼ 重要：この部分が読み込まれていませんでした ▼▼▼
+    # ▼▼▼ このブロックが絶対に必要です ▼▼▼
     - name: zmk-pmw3610-driver
       remote: badjeff
       revision: main
-    # ▲▲▲ ここまで ▲▲▲
+    # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
     - name: zmk-dongle-display
       remote: englmaxi
       revision: main
