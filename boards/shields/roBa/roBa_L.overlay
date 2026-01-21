@@ -1,16 +1,10 @@
 #include "roBa.dtsi"
 
-&kscan0 {
-    col-gpios
-        = <&xiao_d 10 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 9 GPIO_ACTIVE_HIGH> 
-        , <&xiao_d 8 GPIO_ACTIVE_HIGH> 
-        , <&xiao_d 7 GPIO_ACTIVE_HIGH> 
-        , <&gpio0 10 GPIO_ACTIVE_HIGH>
-        , <&gpio0 9 GPIO_ACTIVE_HIGH>
-        ;
-};
+/* * 重要: ここに &kscan0 (キーのピン配置) を書かないでください。
+ * roBa.dtsi に書いた正しい定義が上書きされて壊れてしまいます。
+ */
 
+/* 左手のエンコーダーを有効化 */
 &left_encoder {
     status = "okay";
 };
