@@ -6,21 +6,15 @@ include:
   - board: xiao_ble
     shield: roBa_L
     snippet: studio-rpc-usb-uart
-    # ▼▼▼ パスを変更 (-driver を -driver-fix に変更) ▼▼▼
-    cmake-args: -DZMK_EXTRA_MODULES="modules/drivers/zmk-pmw3610-driver-fix;modules/drivers/zmk-dongle-display"
 
   # 右手 (XIAO BLE)
   - board: xiao_ble
     shield: roBa_R
     snippet: studio-rpc-usb-uart
-    # ▼▼▼ パスを変更 (-driver を -driver-fix に変更) ▼▼▼
-    cmake-args: -DZMK_EXTRA_MODULES="modules/drivers/zmk-pmw3610-driver-fix;modules/drivers/zmk-dongle-display"
 
   # ドングル (Nice!Nano v2)
   - board: nice_nano
     shield: roBa_dongle dongle_display
-    # ▼▼▼ パスを変更 (-driver を -driver-fix に変更) ▼▼▼
-    cmake-args: -DZMK_EXTRA_MODULES="modules/drivers/zmk-pmw3610-driver-fix;modules/drivers/zmk-dongle-display"
 
   # ---------------------------------------
   # リセット用ファームウェア
