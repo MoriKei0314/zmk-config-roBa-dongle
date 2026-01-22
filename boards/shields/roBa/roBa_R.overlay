@@ -48,8 +48,8 @@
         reg = <0>;
         spi-max-frequency = <2000000>;
         
-        /* ▼▼▼ ZMK標準ドライバに合わせて irq-gpios に変更 ▼▼▼ */
-        irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        /* ▼▼▼ ここを motion-gpios に戻します（これで必須要件を満たします） ▼▼▼ */
+        motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 
         /* 必須：マウスのX軸・Y軸設定 */
         zephyr,axis-x = <INPUT_REL_X>;
