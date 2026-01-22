@@ -4,19 +4,22 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: englmaxi
       url-base: https://github.com/englmaxi
+    - name: badjeff
+      url-base: https://github.com/badjeff
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    # ▼▼▼ pathを指定して、ZMKが監視している場所に強制配置します ▼▼▼
+    # ▼▼▼ ここが重要：保存場所(path)をbuild.yamlの指定と一致させます ▼▼▼
     - name: zmk-pmw3610-driver
-      url: https://github.com/badjeff/zmk-pmw3610-driver
+      remote: badjeff
       revision: main
       path: modules/drivers/zmk-pmw3610-driver
-    # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+    # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
     - name: zmk-dongle-display
       remote: englmaxi
       revision: main
+      path: modules/drivers/zmk-dongle-display
   self:
     path: config
