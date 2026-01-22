@@ -4,19 +4,14 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: englmaxi
       url-base: https://github.com/englmaxi
-    - name: kumamuk-git
-      url-base: https://github.com/kumamuk-git
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    # ▼▼▼ roBa公式ドライバを標準パスに配置 ▼▼▼
-    - name: zmk-pmw3610-driver
-      remote: kumamuk-git
-      revision: main
-      path: modules/drivers/zmk-pmw3610-driver
-    # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+    # ▼▼▼ トラックボール用ドライバを削除（ZMK標準を使うため） ▼▼▼
+    # - name: zmk-pmw3610-driver ... (削除)
+    # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
     - name: zmk-dongle-display
       remote: englmaxi
       revision: main
