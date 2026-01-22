@@ -4,7 +4,6 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: englmaxi
       url-base: https://github.com/englmaxi
-    # ▼▼▼ 安定している kumamuk を使用 ▼▼▼
     - name: kumamuk-git
       url-base: https://github.com/kumamuk-git
   projects:
@@ -12,12 +11,12 @@ manifest:
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    # ▼▼▼ パスを変更して、強制的に新品をダウンロードさせます ▼▼▼
+    # ▼▼▼ roBa公式ドライバを標準パスに配置 ▼▼▼
     - name: zmk-pmw3610-driver
       remote: kumamuk-git
       revision: main
-      path: modules/drivers/zmk-pmw3610-driver-fix
-    # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+      path: modules/drivers/zmk-pmw3610-driver
+    # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
     - name: zmk-dongle-display
       remote: englmaxi
       revision: main
