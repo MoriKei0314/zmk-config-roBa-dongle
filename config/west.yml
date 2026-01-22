@@ -9,13 +9,13 @@ manifest:
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    # ▼▼▼ トラックボール用ドライバは削除します（標準搭載されたため） ▼▼▼
-    # - name: zmk-pmw3610-driver  <-- これが衝突の原因でした
-    #   ...
-    # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-    # ▼▼▼ ディスプレイ用ドライバは必要なので残します ▼▼▼
+    # ▼▼▼ badjeff版のドライバを復活させます（これが最新で安定しています） ▼▼▼
+    - name: zmk-pmw3610-driver
+      url: https://github.com/badjeff/zmk-pmw3610-driver
+      revision: main
+    # ▼▼▼ ディスプレイ用ドライバ ▼▼▼
     - name: zmk-dongle-display
-      url: https://github.com/englmaxi/zmk-dongle-display
+      remote: englmaxi
       revision: main
   self:
     path: config
