@@ -3,29 +3,29 @@ include:
   # メインファームウェア
   # ---------------------------------------
   # 左手 (XIAO BLE)
-  # ▼▼▼ 修正：seeeduino_xiao_ble から xiao_ble に変更 ▼▼▼
   - board: xiao_ble
     shield: roBa_L
     snippet: studio-rpc-usb-uart
+    # ▼▼▼ 強制読み込み設定 (左) ▼▼▼
+    cmake-args: -DZMK_EXTRA_MODULES="modules/drivers/zmk-pmw3610-driver;modules/drivers/zmk-dongle-display"
 
   # 右手 (XIAO BLE)
-  # ▼▼▼ 修正：seeeduino_xiao_ble から xiao_ble に変更 ▼▼▼
   - board: xiao_ble
     shield: roBa_R
     snippet: studio-rpc-usb-uart
+    # ▼▼▼ 強制読み込み設定 (右) ▼▼▼
+    cmake-args: -DZMK_EXTRA_MODULES="modules/drivers/zmk-pmw3610-driver;modules/drivers/zmk-dongle-display"
 
   # ドングル (Nice!Nano v2)
-  # ▼▼▼ 修正：nice_nano_v2 から nice_nano に変更（これでv2として動きます） ▼▼▼
   - board: nice_nano
     shield: roBa_dongle dongle_display
+    # ▼▼▼ 強制読み込み設定 (ドングル) ▼▼▼
+    cmake-args: -DZMK_EXTRA_MODULES="modules/drivers/zmk-pmw3610-driver;modules/drivers/zmk-dongle-display"
 
   # ---------------------------------------
-  # リセット用ファームウェア（便利ツール）
+  # リセット用ファームウェア
   # ---------------------------------------
-  # 左右キーボード用 (XIAO BLE) のリセット
   - board: xiao_ble
     shield: settings_reset
-
-  # ドングル用 (Nice!Nano v2) のリセット
   - board: nice_nano
     shield: settings_reset
