@@ -4,11 +4,9 @@
     chosen {
         zmk,kscan = &mock_kscan;
         zmk,matrix_transform = &default_transform;
-        /* Dongle DisplayモジュールにOLEDの場所を教える */
         zephyr,display = &oled;
     };
 
-    /* キーマップの形（11列4行）に合わせる */
     default_transform: keymap_transform_0 {
         compatible = "zmk,matrix-transform";
         columns = <11>;
@@ -21,35 +19,25 @@
         >;
     };
 
-    /* 物理ピンを使わないシミュレーション */
     mock_kscan: kscan_0 {
         compatible = "zmk,kscan-mock";
         columns = <11>;
         rows = <4>;
         events = <0>;
     };
-
-    /* トラックボール定義 */
-    trackball: virtual_input {
-        compatible = "zmk,virtual-input";
-        status = "okay";
-    };
 };
 
-/* ▼▼▼ ディスプレイ設定 (Nice!Nano v2用) ▼▼▼ */
-/* Nice!Nanoの標準I2Cピン (SDA=D1/P0.17, SCL=D0/P0.20) を有効化 */
 &pro_micro_i2c {
     status = "okay";
-
     oled: ssd1306@3c {
         compatible = "solomon,ssd1306fb";
         reg = <0x3c>;
         width = <128>;
-        height = <64>; /* 128x32の場合はここを <32> に変更 */
+        height = <64>;
         segment-offset = <0>;
         page-offset = <0>;
         display-offset = <0>;
-        multiplex-ratio = <63>; /* 128x32の場合は <31> に変更 */
+        multiplex-ratio = <63>;
         segment-remap;
         com-invdir;
         com-sequential;
@@ -57,7 +45,5 @@
     };
 };
 
-/* ▼▼▼ 重要：Nice!NanoがXIAOのコードを読めるようにする翻訳機 ▼▼▼ */
-/* roBa.dtsiのエラー回避用 */
 xiao_d: &pro_micro {};
 gpio0: &gpio0 {};
