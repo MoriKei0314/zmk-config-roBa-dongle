@@ -9,7 +9,6 @@ manifest:
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    # ▼▼▼ ディスプレイ用のみ残します（トラックボールは標準機能を使用） ▼▼▼
     - name: zmk-dongle-display
       remote: englmaxi
       revision: main
