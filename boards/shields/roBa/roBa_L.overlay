@@ -11,7 +11,10 @@
         ;
 };
 
-/* 左手エンコーダー有効化 */
+/* あなたのコードに基づきピンを修正：A=D5, B=D0 */
 &left_encoder {
     status = "okay";
+    a-gpios = <&xiao_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+    b-gpios = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+    steps = <80>;
 };
