@@ -17,10 +17,10 @@
 &pinctrl {
     spi0_default: spi0_default {
         group1 {
-            /* P0.05=D5, P0.04=D4 */
+            /* 公式実機配線: SCK=D5, MOSI=D4, MISO=D4 */
             psels = <NRF_PSEL(SPIM_SCK, 0, 5)>,
                     <NRF_PSEL(SPIM_MOSI, 0, 4)>,
-                    <NRF_PSEL(SPIM_MISO, 0, 4)>; /* MISO兼用 */
+                    <NRF_PSEL(SPIM_MISO, 0, 4)>;
         };
     };
 
@@ -41,7 +41,7 @@
     pinctrl-1 = <&spi0_sleep>;
     pinctrl-names = "default", "sleep";
     
-    /* CS = P0.09 (NFCピン) */
+    /* 公式実機配線: CS=D9 */
     cs-gpios = <&gpio0 9 GPIO_ACTIVE_LOW>;
 
     trackball: trackball@0 {
@@ -50,10 +50,8 @@
         reg = <0>;
         spi-max-frequency = <2000000>;
         
-        /* IRQ = P0.02 (D0) */
-        irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        
-        /* 標準ドライバ仕様のピン名 */
+        /* 公式実機配線: IRQ=D2 */
+        /* ZMK標準ドライバのため motion-gpios と記述します */
         motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 
         zephyr,axis-x = <INPUT_REL_X>;
