@@ -48,13 +48,13 @@
         reg = <0>;
         spi-max-frequency = <2000000>;
         
-        /* ZMK標準ドライバ用のピン名 */
-        motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        /* ▼▼▼ badjeffドライバ仕様：irq-gpios に戻します ▼▼▼ */
+        irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 
         zephyr,axis-x = <INPUT_REL_X>;
         zephyr,axis-y = <INPUT_REL_Y>;
-
-        /delete-property/ automouse-layer;
+        
+        /* badjeff仕様：automouse-layerも使えますが、今回はkeymap側で制御します */
     };
 };
 
