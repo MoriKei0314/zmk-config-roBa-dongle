@@ -11,15 +11,14 @@
         ;
 };
 
-/* エンコーダーのピン設定 */
 &left_encoder {
     status = "okay";
     a-gpios = <&xiao_d 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
     b-gpios = <&xiao_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-    steps = <80>; 
+    steps = <80>;
 };
 
-/* ▼▼▼ これがないと動きません（センサー有効化） ▼▼▼ */
+/* センサー有効化 */
 / {
     sensors: sensors {
         compatible = "zmk,keymap-sensors";
