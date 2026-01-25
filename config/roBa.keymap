@@ -3,7 +3,6 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 
-/* マクロ用プレースホルダー定義 */
 #define MACRO_PLACEHOLDER 0
 
 &mt {
@@ -11,39 +10,19 @@
     quick-tap-ms = <0>;
 };
 
+/* ▼▼▼ 復活：badjeffドライバのおかげで、これが機能します ▼▼▼ */
 &trackball {
-    /* ▼▼▼ 復活：レイヤー5 (SCROLL) の時はボール移動をスクロールに変換します ▼▼▼ */
     scroll-layers = <5>;
 };
 
 / {
     combos {
         compatible = "zmk,combos";
-
-        tab {
-            bindings = <&kp TAB>;
-            key-positions = <11 12>;
-        };
-
-        shift_tab {
-            bindings = <&kp LS(TAB)>;
-            key-positions = <12 13>;
-        };
-
-        muhennkann {
-            bindings = <&to_layer_0 INT_MUHENKAN>;
-            key-positions = <11 10>;
-        };
-
-        double_quotation {
-            bindings = <&kp DOUBLE_QUOTES>;
-            key-positions = <20 21>;
-        };
-
-        eq {
-            bindings = <&kp EQUAL>;
-            key-positions = <24 25>;
-        };
+        tab { bindings = <&kp TAB>; key-positions = <11 12>; };
+        shift_tab { bindings = <&kp LS(TAB)>; key-positions = <12 13>; };
+        muhennkann { bindings = <&to_layer_0 INT_MUHENKAN>; key-positions = <11 10>; };
+        double_quotation { bindings = <&kp DOUBLE_QUOTES>; key-positions = <20 21>; };
+        eq { bindings = <&kp EQUAL>; key-positions = <24 25>; };
     };
 
     macros {
@@ -60,7 +39,6 @@
             compatible = "zmk,behavior-hold-tap";
             label = "LAYER_TAP_TO_0";
             bindings = <&mo>, <&to_layer_0>;
-
             #binding-cells = <2>;
             tapping-term-ms = <200>;
         };
@@ -77,8 +55,6 @@
 &mt LEFT_SHIFT Z  &kp X         &kp C         &kp V                   &kp B        &kp COLON                           &kp SEMICOLON  &kp N        &kp M  &kp COMMA  &kp DOT    &kp SLASH
 &kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &lt_to_layer_0 6 INT_HENKAN  &lt 2 SPACE  &lt_to_layer_0 3 INT_MUHENKAN  &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
             >;
-
-            /* エンコーダー: ページアップ/ダウン */
             sensor-bindings = <&inc_dec_kp PG_UP PG_DN>;
         };
 
@@ -110,8 +86,6 @@
 &kp LEFT_SHIFT  &kp LG(LS(LEFT_ARROW))  &trans               &kp LG(LS(RIGHT_ARROW))  &trans   &trans                &trans  &trans  &trans  &trans  &trans  &trans
 &trans          &trans                  &trans               &trans               &trans   &trans                &trans  &trans                          &trans
             >;
-
-            /* エンコーダー: ブラウザタブ切り替えやズームなど */
             sensor-bindings = <&inc_dec_kp LC(PAGE_UP) LC(PAGE_DOWN)>;
         };
 
