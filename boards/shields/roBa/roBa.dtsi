@@ -11,6 +11,7 @@
         display-name = "Default";
         transform = <&default_transform>;
         kscan = <&kscan0>;
+        keys = <&key_physical_attrs 100 100 0 37 0 0 0>, <&key_physical_attrs 100 100 100 12 0 0 0>, <&key_physical_attrs 100 100 200 0 0 0 0>, <&key_physical_attrs 100 100 300 12 0 0 0>, <&key_physical_attrs 100 100 400 24 0 0 0>, <&key_physical_attrs 100 100 800 24 0 0 0>, <&key_physical_attrs 100 100 900 12 0 0 0>, <&key_physical_attrs 100 100 1000 0 0 0 0>, <&key_physical_attrs 100 100 1100 12 0 0 0>, <&key_physical_attrs 100 100 1200 37 0 0 0>, <&key_physical_attrs 100 100 0 137 0 0 0>, <&key_physical_attrs 100 100 100 112 0 0 0>, <&key_physical_attrs 100 100 200 100 0 0 0>, <&key_physical_attrs 100 100 300 112 0 0 0>, <&key_physical_attrs 100 100 400 124 0 0 0>, <&key_physical_attrs 100 100 500 137 0 0 0>, <&key_physical_attrs 100 100 700 137 0 0 0>, <&key_physical_attrs 100 100 800 124 0 0 0>, <&key_physical_attrs 100 100 900 112 0 0 0>, <&key_physical_attrs 100 100 1000 100 0 0 0>, <&key_physical_attrs 100 100 1100 112 0 0 0>, <&key_physical_attrs 100 100 1200 137 0 0 0>, <&key_physical_attrs 100 100 0 237 0 0 0>, <&key_physical_attrs 100 100 100 212 0 0 0>, <&key_physical_attrs 100 100 200 200 0 0 0>, <&key_physical_attrs 100 100 300 212 0 0 0>, <&key_physical_attrs 100 100 400 224 0 0 0>, <&key_physical_attrs 100 100 500 237 0 0 0>, <&key_physical_attrs 100 100 700 237 0 0 0>, <&key_physical_attrs 100 100 800 224 0 0 0>, <&key_physical_attrs 100 100 900 212 0 0 0>, <&key_physical_attrs 100 100 1000 200 0 0 0>, <&key_physical_attrs 100 100 1100 212 0 0 0>, <&key_physical_attrs 100 100 1200 237 0 0 0>, <&key_physical_attrs 100 100 0 337 0 0 0>, <&key_physical_attrs 100 100 100 312 0 0 0>, <&key_physical_attrs 100 100 200 300 0 0 0>, <&key_physical_attrs 100 100 325 337 0 0 0>, <&key_physical_attrs 100 100 437 350 1000 437 350>, <&key_physical_attrs 100 100 550 387 2000 550 387>, <&key_physical_attrs 100 100 650 387 (-2000) 650 387>, <&key_physical_attrs 100 100 763 350 (-1000) 0 350>, <&key_physical_attrs 100 100 1200 337 0 0 0>;
     };
 
     default_transform: keymap_transform_0 {
@@ -29,30 +30,20 @@
         compatible = "zmk,kscan-gpio-matrix";
         label = "KSCAN";
         diode-direction = "col2row";
-        
-        /* 行（Row）の定義 */
         row-gpios
             = <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&xiao_d 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             ;
-
-        /* 左手用の列（Col）定義 */
-        col-gpios
-            = <&xiao_d 4 GPIO_ACTIVE_HIGH>
-            , <&xiao_d 5 GPIO_ACTIVE_HIGH>
-            , <&xiao_d 10 GPIO_ACTIVE_HIGH>
-            , <&xiao_d 9 GPIO_ACTIVE_HIGH>
-            , <&xiao_d 8 GPIO_ACTIVE_HIGH>
-            ;
     };
 
+    /* ピン定義：A=D5, B=D0 */
     left_encoder: encoder_left {
         compatible = "alps,ec11";
         a-gpios = <&xiao_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <12>;
+        steps = <80>; /* steps=12だと荒すぎるため80に変更推奨 */
         status = "disabled";
     };
 
@@ -60,10 +51,11 @@
         status = "disabled";
     };
 
+    /* センサー登録 */
     sensors: sensors {
         compatible = "zmk,keymap-sensors";
         sensors = <&left_encoder &right_encoder>;
-        triggers-per-rotation = <10>;
+        triggers-per-rotation = <20>;
     };
 
     trackball_listener: trackball_listener {
@@ -77,6 +69,5 @@
     trackball: trackball@0 {
         status = "disabled";
         reg = <0>;
-        /* ここに automouse-layer がないことを確認してください */
     };
 };
