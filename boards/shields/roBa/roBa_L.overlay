@@ -11,9 +11,19 @@
         ;
 };
 
-/* ▼▼▼ エンコーダーのピンを明示的に指定します ▼▼▼ */
+/* エンコーダーのピン設定 */
 &left_encoder {
     status = "okay";
     a-gpios = <&xiao_d 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
     b-gpios = <&xiao_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+    steps = <80>; /* 1回転あたりのステップ数（動作が逆ならA/Bを入れ替える） */
+};
+
+/* ▼▼▼ 追加：これを書かないと動きません！ ▼▼▼ */
+/ {
+    sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&left_encoder>;
+        triggers-per-rotation = <20>;
+    };
 };
