@@ -10,7 +10,7 @@
     quick-tap-ms = <0>;
 };
 
-/* ▼▼▼ 空にします（エラー回避） ▼▼▼ */
+/* 標準ドライバのため空設定 */
 &trackball {
 };
 
@@ -54,7 +54,7 @@
 &mt LEFT_SHIFT Z  &kp X         &kp C         &kp V                   &kp B        &kp COLON                           &kp SEMICOLON  &kp N        &kp M  &kp COMMA  &kp DOT    &kp SLASH
 &kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &lt_to_layer_0 6 INT_HENKAN  &lt 2 SPACE  &lt_to_layer_0 3 INT_MUHENKAN  &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
             >;
-            /* ▼▼▼ これが左手エンコーダーのスクロール設定（機能します） ▼▼▼ */
+            /* 左手エンコーダースクロール */
             sensor-bindings = <&inc_dec_kp PG_UP PG_DN>;
         };
 
