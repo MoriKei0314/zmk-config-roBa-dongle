@@ -10,7 +10,7 @@
     quick-tap-ms = <0>;
 };
 
-/* ▼▼▼ 復活：badjeffドライバのおかげで、これが機能します ▼▼▼ */
+/* ▼▼▼ スクロール機能設定 ▼▼▼ */
 &trackball {
     scroll-layers = <5>;
 };
