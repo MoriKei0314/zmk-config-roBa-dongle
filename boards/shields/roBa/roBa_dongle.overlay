@@ -26,7 +26,7 @@
         events = <0>;
     };
 
-    /* キーマップエラー回避用ダミー定義 */
+    /* ダミー定義 */
     trackball: virtual_input {
         compatible = "zmk,virtual-input";
         status = "okay";
