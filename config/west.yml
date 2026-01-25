@@ -4,7 +4,7 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: englmaxi
       url-base: https://github.com/englmaxi
-    # ▼▼▼ スクロール機能対応の高機能ドライバを指定 ▼▼▼
+    # ▼▼▼ スクロール機能対応の高機能ドライバ ▼▼▼
     - name: badjeff
       url-base: https://github.com/badjeff
   projects:
