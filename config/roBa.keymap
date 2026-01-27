@@ -22,14 +22,14 @@
     };
 
     macros {
-        /* 変換キー用マクロ：レイヤー0に戻って変換キーを押す */
+        /* 変換キー用マクロ */
         macro_henkan: macro_henkan {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&to 0 &kp INT_HENKAN>;
             label = "MACRO_HENKAN";
         };
-        /* 無変換キー用マクロ：レイヤー0に戻って無変換キーを押す */
+        /* 無変換キー用マクロ */
         macro_muhenkan: macro_muhenkan {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -46,19 +46,19 @@
     };
 
     behaviors {
-        /* ホールドでレイヤー移動、タップで変換マクロ実行 */
+        /* ▼▼▼ 修正：binding-cellsを2に変更 ▼▼▼ */
         lt_henkan: lt_henkan {
             compatible = "zmk,behavior-hold-tap";
             label = "LT_HENKAN";
-            #binding-cells = <1>;
+            #binding-cells = <2>;
             bindings = <&mo>, <&macro_henkan>;
             tapping-term-ms = <200>;
         };
-        /* ホールドでレイヤー移動、タップで無変換マクロ実行 */
+        
         lt_muhenkan: lt_muhenkan {
             compatible = "zmk,behavior-hold-tap";
             label = "LT_MUHENKAN";
-            #binding-cells = <1>;
+            #binding-cells = <2>;
             bindings = <&mo>, <&macro_muhenkan>;
             tapping-term-ms = <200>;
         };
@@ -73,7 +73,7 @@
 &kp Q             &kp W         &kp E         &kp R                   &kp T                                            &kp Y        &kp U  &lt 5 I      &kp O      &kp P
 &kp A             &kp S         &kp D         &kp F                   &kp G        &kp LS(LG(S))                       &kp MINUS    &kp H        &kp J  &kp K      &kp L      &kp SQT
 &mt LEFT_SHIFT Z  &kp X         &kp C         &kp V                   &kp B        &kp COLON                           &kp SEMICOLON  &kp N        &kp M  &kp COMMA  &kp DOT    &kp SLASH
-&kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &lt_henkan 6            &lt 2 SPACE  &lt_muhenkan 3                      &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
+&kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &lt_henkan 6 0          &lt 2 SPACE  &lt_muhenkan 3 0                    &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
             >;
             sensor-bindings = <&inc_dec_kp PG_UP PG_DN>;
         };
@@ -104,39 +104,4 @@
 &kp ESCAPE      &kp LC(LS(TAB))         &kp UP_ARROW         &kp LC(TAB)          &trans                                 &trans  &trans  &trans  &trans  &trans
 &kp HOME        &kp LEFT_ARROW          &kp DOWN_ARROW       &kp RIGHT_ARROW      &kp END  &trans                &trans  &trans  &trans  &trans  &trans  &trans
 &kp LEFT_SHIFT  &kp LG(LS(LEFT_ARROW))  &trans               &kp LG(LS(RIGHT_ARROW))  &trans   &trans                &trans  &trans  &trans  &trans  &trans  &trans
-&trans          &trans                  &trans               &trans               &trans   &trans                &trans  &trans                          &trans
-            >;
-            sensor-bindings = <&inc_dec_kp LC(PAGE_UP) LC(PAGE_DOWN)>;
-        };
-
-        /* Layer 4: MOUSE */
-        MOUSE {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans                       &trans  &trans    &trans    &trans    &trans
-&trans  &trans  &trans  &trans  &trans  &trans       &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
-&trans  &trans  &trans  &trans  &trans  &trans       &trans  &trans  &trans    &trans    &trans    &trans
-&trans  &trans  &trans  &trans  &trans  &trans       &trans  &trans                                &trans
-            >;
-        };
-
-        /* Layer 5: SCROLL */
-        SCROLL {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans                       &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans       &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans       &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans       &trans  &trans                          &trans
-            >;
-        };
-
-        /* Layer 6: SYSTEM */
-        layer_6 {
-            bindings = <
-&trans  &trans        &trans        &trans        &trans                                         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
-&trans  &trans        &trans        &trans        &trans  &trans                  &trans         &trans        &trans        &trans        &trans        &trans
-&trans  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &trans  &trans                  &bootloader    &trans        &trans        &trans        &trans        &bt BT_CLR
-&trans  &trans        &trans        &trans        &trans  &trans                  &trans         &trans                                                  &bt BT_CLR_ALL
-            >;
-        };
-    };
-};
+&trans          &trans                  &trans               &trans               &trans   &trans                &trans  &trans                          &
