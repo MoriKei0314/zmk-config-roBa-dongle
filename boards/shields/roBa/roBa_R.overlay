@@ -41,7 +41,7 @@
     pinctrl-1 = <&spi0_sleep>;
     pinctrl-names = "default", "sleep";
     
-    /* 実機配線: CS=D9 */
+    /* 実機配線: CS=D9 (GPIO 0.09) */
     cs-gpios = <&gpio0 9 GPIO_ACTIVE_LOW>;
 
     trackball: trackball@0 {
@@ -50,7 +50,8 @@
         reg = <0>;
         spi-max-frequency = <2000000>;
         
-        /* 実機配線 D0 (gpio0 2) */
+        /* ★最重要修正：あなたの実機配線 D0 (gpio0 2) に修正★ */
+        /* ZMK標準ドライバ仕様の名前 motion-gpios を使用 */
         motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 
         zephyr,axis-x = <INPUT_REL_X>;
@@ -58,4 +59,10 @@
     };
 };
 
-/* 【重要】trackball_listener は削除します（標準ドライバでは不要です） */
+/ {
+    trackball_listener {
+        status = "okay";
+        compatible = "zmk,input-listener";
+        device = <&trackball>;
+    };
+};
