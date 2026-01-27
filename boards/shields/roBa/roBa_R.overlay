@@ -17,7 +17,7 @@
 &pinctrl {
     spi0_default: spi0_default {
         group1 {
-            /* 公式通り: SCK=D5, MOSI=D4, MISO=D4 */
+            /* 実機配線: SCK=D5, MOSI=D4, MISO=D4 */
             psels = <NRF_PSEL(SPIM_SCK, 0, 5)>,
                     <NRF_PSEL(SPIM_MOSI, 0, 4)>,
                     <NRF_PSEL(SPIM_MISO, 0, 4)>;
@@ -41,7 +41,7 @@
     pinctrl-1 = <&spi0_sleep>;
     pinctrl-names = "default", "sleep";
     
-    /* 公式通り: CS=D9 */
+    /* 実機配線: CS=D9 */
     cs-gpios = <&gpio0 9 GPIO_ACTIVE_LOW>;
 
     trackball: trackball@0 {
@@ -50,8 +50,7 @@
         reg = <0>;
         spi-max-frequency = <2000000>;
         
-        /* ▼▼▼ 重要：公式ピン(gpio0 2)を標準ドライバ名(motion-gpios)に紐づけ ▼▼▼ */
-        /* これにより物理的には公式そのままで、ソフト的に認識させます */
+        /* 実機配線 D0 (gpio0 2) */
         motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 
         zephyr,axis-x = <INPUT_REL_X>;
@@ -59,10 +58,4 @@
     };
 };
 
-/ {
-    trackball_listener {
-        status = "okay";
-        compatible = "zmk,input-listener";
-        device = <&trackball>;
-    };
-};
+/* 【重要】trackball_listener は削除します（標準ドライバでは不要です） */
