@@ -11,11 +11,9 @@
         ;
 };
 
-/* 実機配線: A=D5, B=D0 */
 &left_encoder {
     status = "okay";
     a-gpios = <&xiao_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
     b-gpios = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-    /* 感度調整: 12だと敏感すぎる場合があるため24に調整（お好みで変更可） */
-    steps = <24>;
+    steps = <80>;
 };
