@@ -14,6 +14,13 @@
         ;
 };
 
+/* ▼▼▼ 【追加】信号転送用ノード ▼▼▼ */
+/ {
+    input_relay: input_relay {
+        compatible = "zmk,input-split";
+    };
+};
+
 &pinctrl {
     spi0_default: spi0_default {
         group1 {
@@ -47,19 +54,8 @@
         compatible = "pixart,pmw3610";
         reg = <0>;
         spi-max-frequency = <2000000>;
-        
-        /* 実機配線 D0 */
         motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-
         zephyr,axis-x = <INPUT_REL_X>;
         zephyr,axis-y = <INPUT_REL_Y>;
-    };
-};
-
-/ {
-    trackball_listener {
-        status = "okay";
-        compatible = "zmk,input-listener";
-        device = <&trackball>;
     };
 };
