@@ -16,51 +16,12 @@
         compatible = "zmk,combos";
         tab { bindings = <&kp TAB>; key-positions = <11 12>; };
         shift_tab { bindings = <&kp LS(TAB)>; key-positions = <12 13>; };
-        muhennkann { bindings = <&to_layer_0 INT_MUHENKAN>; key-positions = <11 10>; };
+        muhennkann { bindings = <&kp INT_MUHENKAN>; key-positions = <11 10>; };
         double_quotation { bindings = <&kp DOUBLE_QUOTES>; key-positions = <20 21>; };
         eq { bindings = <&kp EQUAL>; key-positions = <24 25>; };
     };
 
-    macros {
-        /* ▼▼▼ 修正：ダミー引数を受け取れるように変更 ▼▼▼ */
-        macro_henkan: macro_henkan {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&to 0 &kp INT_HENKAN>;
-            label = "MACRO_HENKAN";
-        };
-        macro_muhenkan: macro_muhenkan {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&to 0 &kp INT_MUHENKAN>;
-            label = "MACRO_MUHENKAN";
-        };
-        /* コンボ用 */
-        to_layer_0: to_layer_0 {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&to 0 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
-            label = "TO_LAYER_0";
-        };
-    };
-
-    behaviors {
-        /* ▼▼▼ 修正：binding-cellsを2（ルール通り）に変更 ▼▼▼ */
-        lt_henkan: lt_henkan {
-            compatible = "zmk,behavior-hold-tap";
-            label = "LT_HENKAN";
-            #binding-cells = <2>;
-            bindings = <&mo>, <&macro_henkan>;
-            tapping-term-ms = <200>;
-        };
-        lt_muhenkan: lt_muhenkan {
-            compatible = "zmk,behavior-hold-tap";
-            label = "LT_MUHENKAN";
-            #binding-cells = <2>;
-            bindings = <&mo>, <&macro_muhenkan>;
-            tapping-term-ms = <200>;
-        };
-    };
+    /* ビルドエラー回避のため、一旦マクロ定義を削除し標準機能のみで構成 */
 
     keymap {
         compatible = "zmk,keymap";
@@ -70,8 +31,7 @@
 &kp Q             &kp W         &kp E         &kp R                   &kp T                                            &kp Y        &kp U  &lt 5 I      &kp O      &kp P
 &kp A             &kp S         &kp D         &kp F                   &kp G        &kp LS(LG(S))                       &kp MINUS    &kp H        &kp J  &kp K      &kp L      &kp SQT
 &mt LEFT_SHIFT Z  &kp X         &kp C         &kp V                   &kp B        &kp COLON                           &kp SEMICOLON  &kp N        &kp M  &kp COMMA  &kp DOT    &kp SLASH
-/* ▼▼▼ 修正：ダミー引数「0」を追加（これでルール適合） ▼▼▼ */
-&kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &lt_henkan 6 0          &lt 2 SPACE  &lt_muhenkan 3 0                    &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
+&kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &lt 6 INT_HENKAN        &lt 2 SPACE  &lt 3 INT_MUHENKAN                  &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
             >;
             sensor-bindings = <&inc_dec_kp PG_UP PG_DN>;
         };
