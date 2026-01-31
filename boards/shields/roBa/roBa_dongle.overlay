@@ -26,10 +26,10 @@
         events = <0>;
     };
 
-    /* ▼▼▼ 修正：桁数を合わせるため <0 0> に変更 ▼▼▼ */
+    /* ▼▼▼ 修正：サイズを1にしてエラー回避 <0 1> ▼▼▼ */
     input_relay: input_relay {
         compatible = "zmk,input-split";
-        reg = <0 0>;
+        reg = <0 1>;
     };
 
     trackball: virtual_input {
