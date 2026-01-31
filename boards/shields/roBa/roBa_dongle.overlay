@@ -26,18 +26,17 @@
         events = <0>;
     };
 
-    /* ▼▼▼ 【追加】これが無いと CONFIG_ZMK_INPUT_SPLIT でエラーになります ▼▼▼ */
+    /* ▼▼▼ 修正：reg = <0>; を追加 ▼▼▼ */
     input_relay: input_relay {
         compatible = "zmk,input-split";
+        reg = <0>;
     };
 
-    /* 仮想入力デバイス定義 */
     trackball: virtual_input {
         compatible = "zmk,virtual-input";
         status = "okay";
     };
 
-    /* 入力リスナー */
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
