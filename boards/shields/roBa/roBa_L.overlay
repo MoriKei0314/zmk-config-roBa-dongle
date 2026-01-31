@@ -11,9 +11,16 @@
         ;
 };
 
+/* ▼▼▼ 【追加】信号転送用ノード ▼▼▼ */
+/ {
+    input_relay: input_relay {
+        compatible = "zmk,input-split";
+    };
+};
+
 &left_encoder {
     status = "okay";
     a-gpios = <&xiao_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
     b-gpios = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-    steps = <80>;
+    steps = <24>;
 };
