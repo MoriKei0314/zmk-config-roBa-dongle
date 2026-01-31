@@ -26,9 +26,16 @@
         events = <0>;
     };
 
+    /* 仮想入力デバイス定義 */
     trackball: virtual_input {
         compatible = "zmk,virtual-input";
         status = "okay";
+    };
+
+    /* ▼▼▼ 【重要】入力リスナーを追加（これで信号を受け取ります） ▼▼▼ */
+    trackball_listener: trackball_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball>;
     };
 };
 
