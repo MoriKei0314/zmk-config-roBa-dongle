@@ -11,11 +11,11 @@
         ;
 };
 
-/* ▼▼▼ 修正：reg = <0>; を追加 ▼▼▼ */
+/* ▼▼▼ 修正：桁数を合わせるため <0 0> に変更 ▼▼▼ */
 / {
     input_relay: input_relay {
         compatible = "zmk,input-split";
-        reg = <0>;
+        reg = <0 0>;
     };
 };
 
