@@ -11,10 +11,11 @@
         ;
 };
 
-/* ▼▼▼ 【追加】信号転送用ノード ▼▼▼ */
+/* ▼▼▼ 修正：reg = <0>; を追加 ▼▼▼ */
 / {
     input_relay: input_relay {
         compatible = "zmk,input-split";
+        reg = <0>;
     };
 };
 
