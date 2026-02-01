@@ -14,11 +14,12 @@
         ;
 };
 
-/* ▼▼▼ 修正：@0 を付与 ▼▼▼ */
+/* ▼▼▼ 修正：転送対象のデバイスを指定 ▼▼▼ */
 / {
     input_relay: input_relay@0 {
         compatible = "zmk,input-split";
         reg = <0 1>;
+        device = <&trackball>;
     };
 };
 
@@ -58,13 +59,5 @@
         motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         zephyr,axis-x = <INPUT_REL_X>;
         zephyr,axis-y = <INPUT_REL_Y>;
-    };
-};
-
-/ {
-    trackball_listener {
-        status = "okay";
-        compatible = "zmk,input-listener";
-        device = <&trackball>;
     };
 };
