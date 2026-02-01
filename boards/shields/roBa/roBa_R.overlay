@@ -51,7 +51,7 @@
     };
 };
 
-/* 共通dtsiの転送ノードに、実体（トラックボール）を紐付け */
-&trackball_split {
+/* トラックボールの入力をリレーに接続 */
+&input_relay {
     device = <&trackball>;
 };
