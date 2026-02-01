@@ -26,8 +26,8 @@
         events = <0>;
     };
 
-    /* ▼▼▼ 修正：サイズを1にしてエラー回避 <0 1> ▼▼▼ */
-    input_relay: input_relay {
+    /* ▼▼▼ 修正：名前を @0 付きに変更 ▼▼▼ */
+    input_relay: input_relay@0 {
         compatible = "zmk,input-split";
         reg = <0 1>;
     };
