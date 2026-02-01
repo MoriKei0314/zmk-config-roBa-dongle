@@ -26,13 +26,13 @@
         events = <0>;
     };
 
-    /* 信号受信用のリレー定義 */
+    /* ▼▼▼ 重要：信号受信用の定義 ▼▼▼ */
     input_relay: input_relay@0 {
         compatible = "zmk,input-split";
         reg = <0 1>;
     };
 
-    /* ▼▼▼ 修正：リスナーの接続先を input_relay に変更 ▼▼▼ */
+    /* リスナー：input_relayから来た信号をPCへ送る */
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&input_relay>;
