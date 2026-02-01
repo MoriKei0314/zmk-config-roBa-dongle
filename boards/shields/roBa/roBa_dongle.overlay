@@ -1,3 +1,4 @@
+#include <dt-bindings/zmk/matrix_transform.h>
 #include "roBa.dtsi"
 
 / {
@@ -15,7 +16,7 @@
     };
 };
 
-/* 共通dtsiのリスナーを有効化 */
+/* リスナー有効化 */
 &trackball_listener {
     status = "okay";
 };
