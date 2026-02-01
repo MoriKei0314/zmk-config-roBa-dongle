@@ -26,17 +26,19 @@
         events = <0>;
     };
 
-    /* ▼▼▼ 修正：名前を @0 付きに変更 ▼▼▼ */
+    /* ▼▼▼ 修正：input_relay に @0 を付与 ▼▼▼ */
     input_relay: input_relay@0 {
         compatible = "zmk,input-split";
         reg = <0 1>;
     };
 
-    trackball: virtual_input {
+    /* ▼▼▼ 修正：trackball 定義をシンプルに ▼▼▼ */
+    trackball: trackball {
         compatible = "zmk,virtual-input";
         status = "okay";
     };
 
+    /* 入力リスナー */
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
