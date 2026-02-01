@@ -14,7 +14,7 @@
         ;
 };
 
-/* ▼▼▼ 修正：転送対象のデバイスを指定 ▼▼▼ */
+/* ▼▼▼ 重要：トラックボールの信号をドングルへ転送する設定 ▼▼▼ */
 / {
     input_relay: input_relay@0 {
         compatible = "zmk,input-split";
