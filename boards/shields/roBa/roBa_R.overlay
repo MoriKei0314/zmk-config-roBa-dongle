@@ -14,7 +14,7 @@
         ;
 };
 
-/* ▼▼▼ 修正：名前を @0 付きに変更 ▼▼▼ */
+/* ▼▼▼ 修正：@0 を付与 ▼▼▼ */
 / {
     input_relay: input_relay@0 {
         compatible = "zmk,input-split";
