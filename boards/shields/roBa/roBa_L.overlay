@@ -11,11 +11,7 @@
         ;
 };
 
-/* 左手はinput_relay不要。エンコーダー定義のみ。 */
-
+/* 共通dtsiで定義したエンコーダーを有効化 */
 &left_encoder {
     status = "okay";
-    a-gpios = <&xiao_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-    b-gpios = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-    steps = <24>;
 };
