@@ -11,7 +11,7 @@
         ;
 };
 
-/* 左手はキー入力（PG_UPなど）として送るため、input_relayは不要です */
+/* 左手はinput_relay不要。エンコーダー定義のみ。 */
 
 &left_encoder {
     status = "okay";
