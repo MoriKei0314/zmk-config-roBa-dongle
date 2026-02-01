@@ -11,7 +11,11 @@
         ;
 };
 
-/* 共通dtsiで定義したエンコーダーを有効化 */
 &left_encoder {
     status = "okay";
+};
+
+/* エンコーダーの入力をリレーに接続 */
+&input_relay {
+    device = <&left_encoder>;
 };
