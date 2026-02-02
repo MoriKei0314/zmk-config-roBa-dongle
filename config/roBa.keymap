@@ -13,147 +13,34 @@
 / {
     combos {
         compatible = "zmk,combos";
-
-        tab {
-            bindings = <&kp TAB>;
-            key-positions = <11 12>;
-        };
-
-        shift_tab {
-            bindings = <&kp LS(TAB)>;
-            key-positions = <12 13>;
-        };
-
-        muhennkann {
-            bindings = <&to_layer_0 INT_MUHENKAN>;
-            key-positions = <11 10>;
-        };
-
-        double_quotation {
-            bindings = <&kp DOUBLE_QUOTES>;
-            key-positions = <20 21>;
-        };
-
-        eq {
-            bindings = <&kp EQUAL>;
-            key-positions = <24 25>;
-        };
+        tab { bindings = <&kp TAB>; key-positions = <11 12>; };
+        shift_tab { bindings = <&kp LS(TAB)>; key-positions = <12 13>; };
+        muhennkann { bindings = <&to_layer_0 INT_MUHENKAN>; key-positions = <11 10>; };
+        double_quotation { bindings = <&kp DOUBLE_QUOTES>; key-positions = <20 21>; };
+        eq { bindings = <&kp EQUAL>; key-positions = <24 25>; };
     };
 
     macros {
-        /* --- JIS配列対応用マクロ --- */
-        /* Keymap EditorのMacrosタブから配置できます */
-        /* アットマーク @ */
+        jis_at: jis_at { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp LBKT>; label = "JIS_AT"; };
+        jis_colon: jis_colon { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp SQT>; label = "JIS_COLON"; };
+        jis_plus: jis_plus { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp LS(SEMI)>; label = "JIS_PLUS"; };
+        jis_star: jis_star { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp LS(SQT)>; label = "JIS_STAR"; };
+        jis_equal: jis_equal { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp LS(MINUS)>; label = "JIS_EQUAL"; };
+        jis_dqt: jis_dqt { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp LS(N2)>; label = "JIS_DQT"; };
+        jis_under: jis_under { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp LS(INT1)>; label = "JIS_UNDER"; };
 
-        jis_at: jis_at {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LBKT>;
-            label = "JIS_AT";
-        };
-
-        /* コロン : */
-
-        jis_colon: jis_colon {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp SQT>;
-            label = "JIS_COLON";
-        };
-
-        /* プラス + (Shift押下自動化) */
-
-        jis_plus: jis_plus {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LS(SEMI)>;
-            label = "JIS_PLUS";
-        };
-
-        /* アスタリスク * (Shift押下自動化) */
-
-        jis_star: jis_star {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LS(SQT)>;
-            label = "JIS_STAR";
-        };
-
-        /* イコール = (Shift押下自動化) */
-
-        jis_equal: jis_equal {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LS(MINUS)>;
-            label = "JIS_EQUAL";
-        };
-
-        /* ダブルクォート " (Shift押下自動化) */
-
-        jis_dqt: jis_dqt {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LS(N2)>;
-            label = "JIS_DQT";
-        };
-
-        /* アンダーバー _ (Shift押下自動化) */
-
-        jis_under: jis_under {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LS(INT1)>;
-            label = "JIS_UNDER";
-        };
-
-        /* --- システム制御用マクロ --- */
-
-        macro_henkan: macro_henkan {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&to 0 &kp INT_HENKAN>;
-            label = "MACRO_HENKAN";
-        };
-
-        macro_muhenkan: macro_muhenkan {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&to 0 &kp INT_MUHENKAN>;
-            label = "MACRO_MUHENKAN";
-        };
-
-        to_layer_0: to_layer_0 {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&to 0 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
-            label = "TO_LAYER_0";
-        };
+        macro_henkan: macro_henkan { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&to 0 &kp INT_HENKAN>; label = "MACRO_HENKAN"; };
+        macro_muhenkan: macro_muhenkan { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&to 0 &kp INT_MUHENKAN>; label = "MACRO_MUHENKAN"; };
+        to_layer_0: to_layer_0 { compatible = "zmk,behavior-macro-one-param"; #binding-cells = <1>; bindings = <&to 0 &macro_param_1to1 &kp MACRO_PLACEHOLDER>; label = "TO_LAYER_0"; };
     };
 
     behaviors {
-        lt_henkan: lt_henkan {
-            compatible = "zmk,behavior-hold-tap";
-            label = "LT_HENKAN";
-            #binding-cells = <2>;
-            bindings = <&mo>, <&macro_henkan>;
-
-            tapping-term-ms = <200>;
-        };
-
-        lt_muhenkan: lt_muhenkan {
-            compatible = "zmk,behavior-hold-tap";
-            label = "LT_MUHENKAN";
-            #binding-cells = <2>;
-            bindings = <&mo>, <&macro_muhenkan>;
-
-            tapping-term-ms = <200>;
-        };
+        lt_henkan: lt_henkan { compatible = "zmk,behavior-hold-tap"; label = "LT_HENKAN"; #binding-cells = <2>; bindings = <&mo>, <&macro_henkan>; tapping-term-ms = <200>; };
+        lt_muhenkan: lt_muhenkan { compatible = "zmk,behavior-hold-tap"; label = "LT_MUHENKAN"; #binding-cells = <2>; bindings = <&mo>, <&macro_muhenkan>; tapping-term-ms = <200>; };
     };
 
     keymap {
         compatible = "zmk,keymap";
-
-        /* Layer 0: Default */
 
         default_layer {
             bindings = <
@@ -162,13 +49,8 @@
 &mt LEFT_SHIFT Z  &kp X         &kp C         &kp V           &kp B        &kp COLON             &kp SEMICOLON  &kp N        &kp M  &kp COMMA  &kp DOT  &kp SLASH
 &kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &lt_henkan 6 0  &lt 2 SPACE  &lt_muhenkan 3 0      &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
             >;
-
-            /* 左手エンコーダースクロール */
-
             sensor-bindings = <&inc_dec_kp PG_UP PG_DN>;
         };
-
-        /* Layer 1: FUNCTION */
 
         FUNCTION {
             bindings = <
@@ -179,8 +61,6 @@
             >;
         };
 
-        /* Layer 2: NUM */
-
         NUM {
             bindings = <
 &kp MINUS                   &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp PLUS                                                   &kp CARET         &kp AMPERSAND      &kp TILDE       &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
@@ -190,8 +70,6 @@
             >;
         };
 
-        /* Layer 3: ARROW */
-
         ARROW {
             bindings = <
 &kp ESCAPE      &kp LC(LS(TAB))         &kp UP_ARROW    &kp LC(TAB)              &trans                       &trans  &trans  &trans  &trans  &trans
@@ -199,13 +77,8 @@
 &kp LEFT_SHIFT  &kp LG(LS(LEFT_ARROW))  &trans          &kp LG(LS(RIGHT_ARROW))  &trans   &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans          &trans                  &trans          &trans                   &trans   &trans      &trans  &trans                          &trans
             >;
-
-            /* エンコーダースクロール */
-
             sensor-bindings = <&inc_dec_kp LC(PAGE_UP) LC(PAGE_DOWN)>;
         };
-
-        /* Layer 4: MOUSE */
 
         MOUSE {
             bindings = <
@@ -216,8 +89,6 @@
             >;
         };
 
-        /* Layer 5: SCROLL */
-
         SCROLL {
             bindings = <
 &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
@@ -226,8 +97,6 @@
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
         };
-
-        /* Layer 6: SYSTEM */
 
         layer_6 {
             bindings = <
