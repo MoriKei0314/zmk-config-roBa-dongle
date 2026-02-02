@@ -1,6 +1,6 @@
 #include "roBa.dtsi"
 
-/* ▼▼▼ 物理キーマトリックス定義 ▼▼▼ */
+/* 物理キーマトリックス定義 */
 / {
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-matrix";
@@ -13,7 +13,6 @@
             , <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             ;
     };
-
     chosen {
         zmk,kscan = &kscan0;
     };
@@ -70,7 +69,7 @@
     };
 };
 
-/* トラックボールの入力をリレーに接続 */
+/* ▼▼▼ 重要：トラックボールを転送リレーに接続 ▼▼▼ */
 &input_relay {
     device = <&trackball>;
 };
