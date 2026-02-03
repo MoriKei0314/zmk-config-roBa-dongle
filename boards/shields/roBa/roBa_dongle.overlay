@@ -1,3 +1,4 @@
+#include <dt-bindings/zmk/matrix_transform.h>
 #include "roBa.dtsi"
 
 / {
@@ -23,17 +24,18 @@
 &pro_micro_i2c {
     status = "okay";
     oled: ssd1306@3c {
-        compatible = "solomon,ssd1306fb";
+        /* ▼▼▼ 修正: SH1106互換モードに変更 ▼▼▼ */
+        compatible = "sinowealth,sh1106";
         reg = <0x3c>;
         width = <128>;
         height = <64>;
-        segment-offset = <0>;
+        segment-offset = <2>; /* SH1106特有のズレ補正 */
         page-offset = <0>;
         display-offset = <0>;
         multiplex-ratio = <63>;
         segment-remap;
         com-invdir;
-        com-sequential;
+        inversion-on;
         prechargep = <0x22>;
     };
 };
