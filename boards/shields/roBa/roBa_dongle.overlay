@@ -14,22 +14,32 @@
         rows = <4>;
         events = <0>;
     };
-};
 
-/* 共通dtsiのリスナーを有効化 */
-&trackball_listener {
-    status = "okay";
+    /* ▼▼▼ ここにご希望の追記内容を統合しました ▼▼▼ */
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+        input_relay: input_relay@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+        };
+    };
+
+    trackball_listener: trackball_listener {
+        compatible = "zmk,input-listener";
+        device = <&input_relay>;
+    };
+    /* ▲▲▲ ここまで ▲▲▲ */
 };
 
 &pro_micro_i2c {
     status = "okay";
     oled: ssd1306@3c {
-        /* ▼▼▼ 修正: SH1106互換モードに変更 ▼▼▼ */
         compatible = "sinowealth,sh1106";
         reg = <0x3c>;
         width = <128>;
         height = <64>;
-        segment-offset = <2>; /* SH1106特有のズレ補正 */
+        segment-offset = <2>;
         page-offset = <0>;
         display-offset = <0>;
         multiplex-ratio = <63>;
