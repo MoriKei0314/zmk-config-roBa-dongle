@@ -1,33 +1,5 @@
 #include "roBa.dtsi"
 
-/ {
-    kscan0: kscan_0 {
-        compatible = "zmk,kscan-gpio-matrix";
-        wakeup-source;
-        diode-direction = "col2row";
-        row-gpios
-            = <&xiao_d 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            ;
-    };
-    chosen {
-        zmk,kscan = &kscan0;
-    };
-
-    /* エンコーダー入力転送設定 */
-    split_inputs {
-        #address-cells = <1>;
-        #size-cells = <0>;
-        input_relay: input_relay@0 {
-            compatible = "zmk,input-split";
-            reg = <0>;
-            device = <&left_encoder>;
-        };
-    };
-};
-
 &kscan0 {
     col-gpios
         = <&xiao_d 10 GPIO_ACTIVE_HIGH>
@@ -41,4 +13,17 @@
 
 &left_encoder {
     status = "okay";
+};
+
+/* ▼▼▼ 入力転送設定 (ここだけ追加) ▼▼▼ */
+/ {
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+        input_relay: input_relay@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+            device = <&left_encoder>;
+        };
+    };
 };
