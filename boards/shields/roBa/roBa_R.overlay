@@ -1,39 +1,11 @@
 #include "roBa.dtsi"
 
-/* 物理キーマトリックス定義 */
-/ {
-    kscan0: kscan_0 {
-        compatible = "zmk,kscan-gpio-matrix";
-        wakeup-source;
-        diode-direction = "col2row";
-        row-gpios
-            = <&xiao_d 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            ;
-    };
-    chosen {
-        zmk,kscan = &kscan0;
-    };
-
-    /* トラックボール入力転送設定 */
-    /* 以前動いていた構成に戻しました */
-    split_inputs {
-        #address-cells = <1>;
-        #size-cells = <0>;
-        input_relay: input_relay@0 {
-            compatible = "zmk,input-split";
-            reg = <0>;
-            device = <&trackball>;
-        };
-    };
-};
-
-/* 右手のキー番号を6番からスタートさせる設定 */
 &default_transform {
     col-offset = <6>;
 };
+
+/* ピン解放 (公式コード準拠) */
+&xiao_serial { status = "disabled"; };
 
 &kscan0 {
     col-gpios
@@ -45,15 +17,34 @@
         ;
 };
 
+/* ▼▼▼ 入力転送設定 (ここだけ追加) ▼▼▼ */
+/ {
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+        input_relay: input_relay@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+            device = <&trackball>;
+        };
+    };
+};
+/* ▲▲▲ 追加終わり ▲▲▲ */
+
 &pinctrl {
     spi0_default: spi0_default {
         group1 {
-            psels = <NRF_PSEL(SPIM_SCK, 0, 5)>, <NRF_PSEL(SPIM_MOSI, 0, 4)>, <NRF_PSEL(SPIM_MISO, 0, 4)>;
+            psels = <NRF_PSEL(SPIM_SCK, 0, 5)>,
+                <NRF_PSEL(SPIM_MOSI, 0, 4)>,
+                <NRF_PSEL(SPIM_MISO, 0, 4)>;
         };
     };
+
     spi0_sleep: spi0_sleep {
         group1 {
-            psels = <NRF_PSEL(SPIM_SCK, 0, 5)>, <NRF_PSEL(SPIM_MOSI, 0, 4)>, <NRF_PSEL(SPIM_MISO, 0, 4)>;
+            psels = <NRF_PSEL(SPIM_SCK, 0, 5)>,
+                <NRF_PSEL(SPIM_MOSI, 0, 4)>,
+                <NRF_PSEL(SPIM_MISO, 0, 4)>;
             low-power-enable;
         };
     };
@@ -72,7 +63,11 @@
         compatible = "pixart,pmw3610";
         reg = <0>;
         spi-max-frequency = <2000000>;
-        motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        /* IRQピン定義 (公式準拠) */
+        irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        /* 自動マウスレイヤー設定 (公式準拠) */
+        automouse-layer = <4>;
+        scroll-layers = <5>;
         zephyr,axis-x = <INPUT_REL_X>;
         zephyr,axis-y = <INPUT_REL_Y>;
     };
