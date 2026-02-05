@@ -8,30 +8,21 @@
         zephyr,display = &oled;
     };
 
+    /* ドングル用ダミーキー定義 (物理キーなし) */
     mock_kscan: kscan_0 {
         compatible = "zmk,kscan-mock";
         columns = <11>;
         rows = <4>;
         events = <0>;
     };
-
-    /* ▼▼▼ ここにご希望の追記内容を統合しました ▼▼▼ */
-    split_inputs {
-        #address-cells = <1>;
-        #size-cells = <0>;
-        input_relay: input_relay@0 {
-            compatible = "zmk,input-split";
-            reg = <0>;
-        };
-    };
-
-    trackball_listener: trackball_listener {
-        compatible = "zmk,input-listener";
-        device = <&input_relay>;
-    };
-    /* ▲▲▲ ここまで ▲▲▲ */
 };
 
+/* リスナー有効化 */
+&trackball_listener {
+    status = "okay";
+};
+
+/* OLEDディスプレイ設定 */
 &pro_micro_i2c {
     status = "okay";
     oled: ssd1306@3c {
