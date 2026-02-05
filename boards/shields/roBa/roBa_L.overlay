@@ -1,7 +1,6 @@
 #include "roBa.dtsi"
 
 / {
-    /* 左手用の物理キー定義 */
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
