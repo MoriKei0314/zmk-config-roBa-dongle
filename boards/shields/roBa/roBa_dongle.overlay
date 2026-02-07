@@ -8,16 +8,24 @@
         zephyr,display = &oled;
     };
 
+    /* ドングル用ダミーキー定義 */
     mock_kscan: kscan_0 {
         compatible = "zmk,kscan-mock";
-        columns = <11>;
+        /* 共通設定に合わせて12列と定義 */
+        columns = <12>;
         rows = <4>;
         events = <0>;
     };
 };
 
+/* リスナー有効化 */
+&trackball_listener {
+    status = "okay";
+};
+
 &pro_micro_i2c {
     status = "okay";
+    /* 砂嵐対策: SH1106用の互換ドライバ指定 */
     oled: ssd1306@3c {
         compatible = "sinowealth,sh1106";
         reg = <0x3c>;
