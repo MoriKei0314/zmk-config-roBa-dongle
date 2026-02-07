@@ -1,6 +1,6 @@
 #include "roBa.dtsi"
 
-/* 右手のキー開始位置オフセット (左6列分ずらす) */
+/* 右手オフセット: 6列目から開始 */
 &default_transform {
     col-offset = <6>;
 };
@@ -8,24 +8,23 @@
 &xiao_serial { status = "disabled"; };
 
 / {
-    /* 右手用の物理キー定義 (5列) */
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
         diode-direction = "col2row";
-        
-        row-gpios =
-            <&xiao_d 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
-            <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
-            <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
-            <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
-        
-        col-gpios =
-            <&xiao_d 10 GPIO_ACTIVE_HIGH>,
-            <&xiao_d  9 GPIO_ACTIVE_HIGH>,
-            <&xiao_d  8 GPIO_ACTIVE_HIGH>,
-            <&xiao_d  7 GPIO_ACTIVE_HIGH>,
-            <&gpio0  10 GPIO_ACTIVE_HIGH>;
+        row-gpios
+            = <&xiao_d 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            ;
+        col-gpios
+            = <&xiao_d 10 GPIO_ACTIVE_HIGH>
+            , <&xiao_d 9 GPIO_ACTIVE_HIGH>
+            , <&xiao_d 8 GPIO_ACTIVE_HIGH>
+            , <&xiao_d 7 GPIO_ACTIVE_HIGH>
+            , <&gpio0 10 GPIO_ACTIVE_HIGH>
+            ;
     };
 
     chosen {
@@ -33,15 +32,20 @@
     };
 };
 
+/* SPIピン定義の修正 */
 &pinctrl {
     spi0_default: spi0_default {
         group1 {
-            psels = <NRF_PSEL(SPIM_SCK, 0, 5)>, <NRF_PSEL(SPIM_MOSI, 0, 4)>, <NRF_PSEL(SPIM_MISO, 0, 4)>;
+            psels = <NRF_PSEL(SPIM_SCK, 0, 5)>,   /* P0.05 (D8) */
+                    <NRF_PSEL(SPIM_MOSI, 0, 6)>,  /* P0.06 (D10) - 修正箇所 */
+                    <NRF_PSEL(SPIM_MISO, 0, 4)>;  /* P0.04 (D9) */
         };
     };
     spi0_sleep: spi0_sleep {
         group1 {
-            psels = <NRF_PSEL(SPIM_SCK, 0, 5)>, <NRF_PSEL(SPIM_MOSI, 0, 4)>, <NRF_PSEL(SPIM_MISO, 0, 4)>;
+            psels = <NRF_PSEL(SPIM_SCK, 0, 5)>,
+                    <NRF_PSEL(SPIM_MOSI, 0, 6)>,  /* 修正箇所 */
+                    <NRF_PSEL(SPIM_MISO, 0, 4)>;
             low-power-enable;
         };
     };
@@ -60,15 +64,13 @@
         compatible = "pixart,pmw3610";
         reg = <0>;
         spi-max-frequency = <2000000>;
-        /* 最新のZMK仕様に合わせて motion-gpios を使用 */
         motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         zephyr,axis-x = <INPUT_REL_X>;
         zephyr,axis-y = <INPUT_REL_Y>;
     };
 };
 
-/* 共通ファイルの枠（trackball_split）を有効化し、デバイスを紐付け */
-&trackball_split {
-    status = "okay";
+/* トラックボールの入力をリレーに接続 */
+&input_relay {
     device = <&trackball>;
 };
