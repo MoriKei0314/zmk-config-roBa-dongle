@@ -15,7 +15,7 @@
         events = <0>;
     };
 
-    /* トラックボール信号の受け皿 (ドングル側) */
+    /* トラックボール信号の受け皿 */
     split_inputs {
         #address-cells = <1>;
         #size-cells = <0>;
@@ -30,8 +30,7 @@
         compatible = "zmk,input-listener";
         device = <&trackball_split>;
         status = "okay";
-        /* Keymapの&trackball設定を反映させる */
-        scroll-layers = <5>; 
+        /* scroll-layers は削除 (エラー原因) */
     };
 };
 
