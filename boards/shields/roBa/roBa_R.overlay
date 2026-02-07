@@ -27,8 +27,8 @@
     spi0_default: spi0_default {
         group1 {
             psels = <NRF_PSEL(SPIM_SCK, 0, 5)>,
-                    <NRF_PSEL(SPIM_MOSI, 0, 4)>, /* 半二重通信: D4 */
-                    <NRF_PSEL(SPIM_MISO, 0, 4)>; /* 半二重通信: D4 */
+                    <NRF_PSEL(SPIM_MOSI, 0, 4)>, /* 0,4 */
+                    <NRF_PSEL(SPIM_MISO, 0, 4)>; /* 0,4 */
         };
     };
     spi0_sleep: spi0_sleep {
@@ -54,14 +54,17 @@
         compatible = "pixart,pmw3610";
         reg = <0>;
         spi-max-frequency = <2000000>;
+        
+        /* 最新仕様: motion-gpios */
         motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         
-        /* 方向反転の設定 */
+        /* ▼▼▼ 方向修正（逆向き対策） ▼▼▼ */
         invert-x;
         invert-y;
         
-        /* スクロール設定 (必要に応じて) */
-        scroll-layers = <5>; 
+        /* スクロール設定 */
+        scroll-layers = <5>;
+        automouse-layer = <4>;
     };
 };
 
