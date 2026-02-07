@@ -8,24 +8,34 @@
         zephyr,display = &oled;
     };
 
-    /* ドングル用ダミーキー定義 */
     mock_kscan: kscan_0 {
         compatible = "zmk,kscan-mock";
-        /* 共通設定に合わせて12列と定義 */
         columns = <12>;
         rows = <4>;
         events = <0>;
     };
-};
 
-/* リスナー有効化 */
-&trackball_listener {
-    status = "okay";
+    /* トラックボール受信用の受け皿定義 */
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+        
+        trackball_split: trackball_split@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+        };
+    };
+
+    /* リスナー定義 (ここで新規作成) */
+    trackball_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball_split>;
+        status = "okay";
+    };
 };
 
 &pro_micro_i2c {
     status = "okay";
-    /* 砂嵐対策: SH1106用の互換ドライバ指定 */
     oled: ssd1306@3c {
         compatible = "sinowealth,sh1106";
         reg = <0x3c>;
