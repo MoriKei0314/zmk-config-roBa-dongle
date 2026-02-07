@@ -8,18 +8,29 @@
         zephyr,display = &oled;
     };
 
-    /* ドングル用ダミーキー定義 (共通設定に合わせて12列) */
     mock_kscan: kscan_0 {
         compatible = "zmk,kscan-mock";
-        columns = <12>;
+        columns = <11>;
         rows = <4>;
         events = <0>;
     };
-};
 
-/* リスナー有効化 */
-&trackball_listener {
-    status = "okay";
+    /* トラックボール信号の受け皿 */
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+        trackball_split: trackball_split@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+        };
+    };
+
+    /* リスナー有効化 */
+    trackball_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball_split>;
+        status = "okay";
+    };
 };
 
 &pro_micro_i2c {
