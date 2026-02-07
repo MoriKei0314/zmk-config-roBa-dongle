@@ -21,25 +21,14 @@
             , <&gpio0 10 GPIO_ACTIVE_HIGH>;
     };
     chosen { zmk,kscan = &kscan0; };
-
-    /* トラックボール転送設定 */
-    split_inputs {
-        #address-cells = <1>;
-        #size-cells = <0>;
-        trackball_split: trackball_split@0 {
-            compatible = "zmk,input-split";
-            reg = <0>;
-            device = <&trackball>;
-        };
-    };
 };
 
 &pinctrl {
     spi0_default: spi0_default {
         group1 {
             psels = <NRF_PSEL(SPIM_SCK, 0, 5)>,
-                    <NRF_PSEL(SPIM_MOSI, 0, 4)>, /* 重要: 0,4 */
-                    <NRF_PSEL(SPIM_MISO, 0, 4)>; /* 重要: 0,4 (半二重) */
+                    <NRF_PSEL(SPIM_MOSI, 0, 4)>, /* 半二重通信: D4 */
+                    <NRF_PSEL(SPIM_MISO, 0, 4)>; /* 半二重通信: D4 */
         };
     };
     spi0_sleep: spi0_sleep {
@@ -65,9 +54,19 @@
         compatible = "pixart,pmw3610";
         reg = <0>;
         spi-max-frequency = <2000000>;
-        /* irq-gpiosではなくmotion-gpiosを使用 */
         motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        zephyr,axis-x = <INPUT_REL_X>;
-        zephyr,axis-y = <INPUT_REL_Y>;
+        
+        /* 方向反転の設定 */
+        invert-x;
+        invert-y;
+        
+        /* スクロール設定 (必要に応じて) */
+        scroll-layers = <5>; 
     };
+};
+
+/* 入力転送の有効化 */
+&trackball_split {
+    status = "okay";
+    device = <&trackball>;
 };
