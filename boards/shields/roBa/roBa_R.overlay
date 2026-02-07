@@ -1,10 +1,7 @@
 #include "roBa.dtsi"
 #include <dt-bindings/input/input-event-codes.h>
 
-&default_transform {
-    col-offset = <6>;
-};
-
+&default_transform { col-offset = <6>; };
 &xiao_serial { status = "disabled"; };
 
 / {
@@ -12,12 +9,12 @@
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
         diode-direction = "col2row";
-        /* 左手と同じ順序 (6, 3, 2, 1) */
+        /* 公式順序 (6,3,2,1 ではなく 1,2,3,6 が正解の可能性が高い) */
         row-gpios
-            = <&xiao_d 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            = <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+            , <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&xiao_d 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
         col-gpios
             = <&xiao_d 10 GPIO_ACTIVE_HIGH>
             , <&xiao_d 9 GPIO_ACTIVE_HIGH>
@@ -25,12 +22,9 @@
             , <&xiao_d 7 GPIO_ACTIVE_HIGH>
             , <&gpio0 10 GPIO_ACTIVE_HIGH>;
     };
+    chosen { zmk,kscan = &kscan0; };
 
-    chosen {
-        zmk,kscan = &kscan0;
-    };
-
-    /* 【修正】split_inputs をここで定義して完結させる */
+    /* split_inputs 定義 */
     split_inputs {
         trackball_split: trackball_split@0 {
             status = "okay";
@@ -76,7 +70,6 @@
 
         motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         
-        invert-x;
-        invert-y;
+        /* invert設定は公式にないので削除 */
     };
 };
