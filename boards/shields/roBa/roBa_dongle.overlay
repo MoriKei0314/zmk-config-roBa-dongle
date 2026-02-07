@@ -15,7 +15,7 @@
         events = <0>;
     };
 
-    /* トラックボール信号の受け皿 */
+    /* トラックボール信号の受け皿 (ドングル側) */
     split_inputs {
         #address-cells = <1>;
         #size-cells = <0>;
@@ -25,11 +25,13 @@
         };
     };
 
-    /* リスナー有効化 */
+    /* リスナー定義 */
     trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball_split>;
         status = "okay";
+        /* Keymapの&trackball設定を反映させる */
+        scroll-layers = <5>; 
     };
 };
 
