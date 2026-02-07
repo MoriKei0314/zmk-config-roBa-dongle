@@ -1,5 +1,6 @@
 #include "roBa.dtsi"
 
+/* 右手のキー開始位置オフセット (左6列分ずらす) */
 &default_transform {
     col-offset = <6>;
 };
@@ -7,6 +8,7 @@
 &xiao_serial { status = "disabled"; };
 
 / {
+    /* 右手用の物理キー定義 (5列) */
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
@@ -58,13 +60,14 @@
         compatible = "pixart,pmw3610";
         reg = <0>;
         spi-max-frequency = <2000000>;
+        /* 最新のZMK仕様に合わせて motion-gpios を使用 */
         motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         zephyr,axis-x = <INPUT_REL_X>;
         zephyr,axis-y = <INPUT_REL_Y>;
     };
 };
 
-/* 共通ファイルの枠を有効化し、デバイスを紐付け */
+/* 共通ファイルの枠（trackball_split）を有効化し、デバイスを紐付け */
 &trackball_split {
     status = "okay";
     device = <&trackball>;
