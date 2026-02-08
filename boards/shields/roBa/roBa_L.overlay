@@ -20,6 +20,13 @@
             , <&gpio0 9 GPIO_ACTIVE_HIGH>;
     };
     chosen { zmk,kscan = &kscan0; };
+    
+    /* 左手用のダミー入力定義 (ビルドエラー回避と通信安定用) */
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+        /* 中身は空でOK */
+    };
 };
 
 &left_encoder { status = "okay"; };
