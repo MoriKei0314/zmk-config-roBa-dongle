@@ -8,7 +8,6 @@
 
     default_transform: keymap_transform_0 {
         compatible = "zmk,matrix-transform";
-        /* 公式通り 11列 */
         columns = <11>;
         rows = <4>;
         
@@ -32,15 +31,5 @@
         compatible = "zmk,keymap-sensors";
         sensors = <&left_encoder>;
         triggers-per-rotation = <20>;
-    };
-
-    split_inputs {
-        #address-cells = <1>;
-        #size-cells = <0>;
-        trackball_split: trackball_split@0 {
-            compatible = "zmk,input-split";
-            reg = <0>;
-            status = "disabled"; 
-        };
     };
 };
