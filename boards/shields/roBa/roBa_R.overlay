@@ -9,7 +9,7 @@
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
         diode-direction = "col2row";
-        /* 公式順序 (6,3,2,1 ではなく 1,2,3,6 が正解の可能性が高い) */
+        /* 公式順序 */
         row-gpios
             = <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
@@ -24,7 +24,7 @@
     };
     chosen { zmk,kscan = &kscan0; };
 
-    /* split_inputs 定義 */
+    /* トラックボール入力の定義 (場所を修正) */
     split_inputs {
         trackball_split: trackball_split@0 {
             status = "okay";
@@ -70,6 +70,8 @@
 
         motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         
-        /* invert設定は公式にないので削除 */
+        /* 方向反転 */
+        invert-x;
+        invert-y;
     };
 };
