@@ -1,25 +1,31 @@
 include:
   # ---------------------------------------
-  # メインファームウェア
+  # Main firmware (3-device dongle setup)
   # ---------------------------------------
-  # 左手 (XIAO BLE)
+  # Left hand (XIAO BLE) - peripheral only.
+  # NOTE (wave10-F): ZMK Studio lives on the central (dongle), so the
+  # studio-rpc-usb-uart snippet was removed from both peripherals.
   - board: xiao_ble
     shield: roBa_L
-    snippet: studio-rpc-usb-uart
+    artifact-name: roBa_L
 
-  # 右手 (XIAO BLE)
+  # Right hand (XIAO BLE, trackball) - peripheral only
   - board: xiao_ble
     shield: roBa_R
-    snippet: studio-rpc-usb-uart
+    artifact-name: roBa_R
 
-  # ドングル (Nice!Nano v2)
+  # Dongle (Nice!Nano v2) - BLE central, keymap + Studio live here
   - board: nice_nano
     shield: roBa_dongle dongle_display
+    snippet: studio-rpc-usb-uart
+    artifact-name: roBa_dongle
 
   # ---------------------------------------
-  # リセット用ファームウェア
+  # Settings-reset firmware
   # ---------------------------------------
   - board: xiao_ble
     shield: settings_reset
+    artifact-name: settings_reset-xiao_ble
   - board: nice_nano
     shield: settings_reset
+    artifact-name: settings_reset-nice_nano

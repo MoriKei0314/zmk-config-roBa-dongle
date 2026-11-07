@@ -75,7 +75,15 @@
         zephyr,axis-y = <INPUT_REL_Y>;
 
         motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        
-        /* 公式と同じ方向にするためinvertは削除 */
+
+        /* Original external-driver tuning, as in-tree DT properties
+         * (wave10-F): CONFIG_PMW3610_CPI=400 -> res-cpi,
+         * CONFIG_PMW3610_ORIENTATION_180=y -> invert-x + invert-y,
+         * CONFIG_PMW3610_SMART_ALGORITHM=y -> smart-mode.
+         * Direction must be checked on real hardware. */
+        res-cpi = <400>;
+        invert-x;
+        invert-y;
+        smart-mode;
     };
 };

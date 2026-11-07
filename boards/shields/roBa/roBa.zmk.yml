@@ -2,7 +2,9 @@ file_format: "1"
 id: roBa
 name: roBa
 type: shield
-url: https://github.com/kumamuk-git/zmk-config-roBa
-requires: [seeeduino_xiao_ble]
+url: https://github.com/MoriKei0314/zmk-config-roBa-dongle
+requires: [xiao_ble, nice_nano]
 features:
   - keys
+  - pointing
+  - display
