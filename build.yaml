@@ -16,7 +16,7 @@ include:
 
   # Dongle (Nice!Nano v2) - BLE central, keymap + Studio live here
   - board: nice_nano@2.0.0//zmk
-    shield: roBa_dongle dongle_display
+    shield: roBa_dongle roBa_display
     snippet: studio-rpc-usb-uart
     artifact-name: roBa_dongle
 

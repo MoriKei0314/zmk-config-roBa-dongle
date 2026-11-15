@@ -85,5 +85,10 @@
         invert-x;
         invert-y;
         smart-mode;
+        /* Keep the sensor fully awake: without this, the in-tree
+         * PMW3610 driver lets the sensor downshift RUN->REST1/2/3 and
+         * the first movement after a pause is often lost. Costs extra
+         * current on the right side; remove if battery life suffers. */
+        force-awake;
     };
 };

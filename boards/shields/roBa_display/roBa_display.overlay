@@ -1,0 +1,8 @@
+/*
+ * Copyright (c) 2026 MoriKei0314
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+/* The display hardware itself (SSD1306 128x64) is described by the
+ * board definition; this shield only provides the status screen. */

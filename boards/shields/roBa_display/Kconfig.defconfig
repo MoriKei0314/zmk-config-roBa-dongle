@@ -1,0 +1,52 @@
+# Copyright (c) 2026 MoriKei0314
+# SPDX-License-Identifier: MIT
+#
+# Based on englmaxi/zmk-dongle-display (MIT). The LVGL / display defaults
+# below mirror that module's dongle_display shield so the build behaves
+# the same; only the widget set is our own.
+
+if SHIELD_ROBA_DISPLAY
+
+choice ZMK_DISPLAY_STATUS_SCREEN
+    default ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+endchoice
+
+config ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+    select LV_USE_LABEL
+    select LV_USE_IMAGE
+    select LV_USE_CANVAS
+    select LV_USE_ANIMIMG
+    select LV_USE_ANIMATION
+    select LV_USE_LINE
+    select LV_FONT_UNSCII_8
+    select LV_FONT_MONTSERRAT_20
+
+config ZMK_ROBA_DISPLAY_LAYER
+    bool "Display the layer name widget"
+    default y
+
+config ZMK_ROBA_DISPLAY_MODIFIERS
+    bool "Display the modifiers widget"
+    default y
+
+choice ZMK_DISPLAY_WORK_QUEUE
+    default ZMK_DISPLAY_WORK_QUEUE_DEDICATED
+endchoice
+
+config LV_Z_MEM_POOL_SIZE
+    default 16384
+
+config LV_Z_VDB_SIZE
+    default 100
+
+config LV_DPI_DEF
+    default 148
+
+config LV_Z_BITS_PER_PIXEL
+    default 1
+
+choice LV_COLOR_DEPTH
+    default LV_COLOR_DEPTH_1
+endchoice
+
+endif

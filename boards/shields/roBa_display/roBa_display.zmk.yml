@@ -1,0 +1,9 @@
+file_format: "1"
+id: roBa_display
+name: roBa_display
+type: shield
+url: https://github.com/MoriKei0314/zmk-config-roBa-dongle
+requires:
+  - i2c_oled
+features:
+  - display

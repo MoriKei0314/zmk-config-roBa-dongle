@@ -1,0 +1,7 @@
+# Copyright (c) 2026 MoriKei0314
+# SPDX-License-Identifier: MIT
+#
+# Based on englmaxi/zmk-dongle-display (MIT).
+
+config SHIELD_ROBA_DISPLAY
+	def_bool $(shields_list_contains,roBa_display)
