@@ -33,6 +33,20 @@
  *     central.h), so this widget now seeds from that getter at init
  *     and re-polls it every 10 s on the display work queue. Events
  *     still give instant updates; the poll is the safety net.
+ *
+ * Wave 3 (2026-11-17): on hardware the levels STILL never arrived
+ * (both rows stayed "---" while keys, trackball and encoder all
+ * worked, i.e. both peripherals were connected and the split link
+ * carried input fine). A full re-trace of the widget, the getter
+ * and the central's BAS fetch chain (recorded in CHANGES.md,
+ * wave 3) found no defect in this widget or in the config: the
+ * getter simply keeps returning level 0, which means no
+ * BATTERY_EVENT ever reaches the split central handler -- the
+ * failing link is the central's one-shot BAS read/subscribe
+ * during GATT discovery, outside this shield's control. To make
+ * the next log capture decisive, the poll and the event path now
+ * LOG_INF what they observe, and init logs whether central
+ * battery fetching was compiled into the build at all.
  */
 
 #include <zephyr/kernel.h>
@@ -126,6 +140,10 @@ static void set_battery_state(struct battery_state state) {
 }
 
 static void battery_status_update_cb(struct battery_state state) {
+    /* Wave-3 diagnostic: proves whether zmk_peripheral_battery_state_changed
+     * events reach this widget at all, and with what payload. Also fires
+     * once at listener init with the no-op state (source = UINT8_MAX). */
+    LOG_INF("roBa battery event: source %u level %u", state.source, state.level);
     struct zmk_widget_roba_battery_status *widget;
     SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_battery_state(state); }
 }
@@ -161,7 +179,14 @@ static struct battery_state battery_status_get_state(const zmk_event_t *eh) {
 static void refresh_from_central(void) {
     for (uint8_t source = 0; source < ZMK_SPLIT_BLE_PERIPHERAL_COUNT; source++) {
         uint8_t level = 0;
-        if (zmk_split_central_get_peripheral_battery_level(source, &level) == 0) {
+        int ret = zmk_split_central_get_peripheral_battery_level(source, &level);
+        /* Wave-3 diagnostic: if this keeps logging level 0 for a
+         * peripheral that is connected and sending input, the central
+         * never stored a level for it, i.e. its BAS read/notify during
+         * GATT discovery never delivered. See CHANGES.md (wave 3) for
+         * how to combine this with the ZMK central's own log lines. */
+        LOG_INF("roBa battery poll: source %u ret %d level %u", source, ret, level);
+        if (ret == 0) {
             set_battery_state((struct battery_state){.source = source, .level = level});
         }
     }
@@ -199,6 +224,9 @@ int zmk_widget_roba_battery_status_init(struct zmk_widget_roba_battery_status *w
     widget_roba_battery_status_init();
 
 #if IS_ENABLED(CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING)
+    /* Wave-3 diagnostic: confirms in the log that the fetch path was
+     * compiled in (the #else branch below is the counter-proof). */
+    LOG_INF("roBa battery: central battery fetching compiled in; seeding + 10 s polling active");
     /* Seed from the central's stored levels (covers peripherals that
      * connected and were read before the display came up), then keep
      * re-checking on the display work queue so a missed event can
@@ -206,6 +234,13 @@ int zmk_widget_roba_battery_status_init(struct zmk_widget_roba_battery_status *w
     refresh_from_central();
     k_work_init_delayable(&battery_poll_work, battery_poll_handler);
     k_work_schedule_for_queue(zmk_display_work_q(), &battery_poll_work, K_SECONDS(10));
+#else
+    /* Wave-3 diagnostic: if this warning appears in a log capture, the
+     * effective build config lost CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_
+     * LEVEL_FETCHING despite both .conf files setting it, which alone
+     * would explain "---" forever (no BAS fetch, no getter, no events). */
+    LOG_WRN("roBa battery: CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING is OFF in this "
+            "build; peripheral battery levels are unavailable");
 #endif
 
     return 0;

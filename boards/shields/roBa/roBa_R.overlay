@@ -83,8 +83,13 @@
          * Direction must be checked on real hardware.
          * 2026-11-17: res-cpi 400 -> 600 (x1.5 sensitivity, user
          * request). 600 is an exact step of the in-tree driver
-         * (RES_STEP=200, range 200..3200 in input_pmw3610.c). */
-        res-cpi = <600>;
+         * (RES_STEP=200, range 200..3200 in input_pmw3610.c).
+         * 2026-11-17 wave 3: 600 -> 3200, the sensor maximum
+         * (RES_MAX, input_pmw3610.c), at the user's request for
+         * "the upper limit" -- about 5.3x the 600 setting at the
+         * sensor. A dongle-side scaling input processor to reach
+         * ~10x was considered and dropped per the same request. */
+        res-cpi = <3200>;
         invert-x;
         invert-y;
         smart-mode;
