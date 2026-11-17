@@ -11,6 +11,28 @@
  *    shows "L ---" / "R ---" instead of hiding the row.
  *  - The small battery canvas icon is dropped; text only, for clarity
  *    on the 128x64 panel.
+ *
+ * Fix wave (2026-11-17): on real hardware both rows stayed "---"
+ * forever. Two causes, both addressed below:
+ *  1. battery_status_get_state() dereferenced the result of
+ *     as_zmk_peripheral_battery_state_changed() unconditionally.
+ *     ZMK_DISPLAY_WIDGET_LISTENER calls the state function with
+ *     eh == NULL at listener init (zmk/display.h), and the as_* cast
+ *     itself has no NULL check (zmk/event_manager.h ZMK_EVENT_IMPL),
+ *     so init stored a garbage state read via a NULL pointer. The
+ *     englmaxi original is NULL-safe (it branches on the cast result
+ *     and its fallback checks ev != NULL); this version now is too.
+ *  2. The widget trusted the event stream alone. Peripheral battery
+ *     events are raised only by a single BAS read at connection time
+ *     plus change notifications afterwards, and the display widget
+ *     listener drops events raised before the display is initialized
+ *     (zmk_display_is_initialized() gate in ZMK_DISPLAY_WIDGET_LISTENER),
+ *     so one missed read latched "---" until the level happened to
+ *     change. The central however keeps the latest levels in RAM
+ *     (zmk_split_central_get_peripheral_battery_level(), zmk/split/
+ *     central.h), so this widget now seeds from that getter at init
+ *     and re-polls it every 10 s on the display work queue. Events
+ *     still give instant updates; the poll is the safety net.
  */
 
 #include <zephyr/kernel.h>
@@ -22,6 +44,9 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include <zmk/display.h>
 #include <zmk/events/battery_state_changed.h>
 #include <zmk/event_manager.h>
+#if IS_ENABLED(CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING)
+#include <zmk/split/central.h>
+#endif
 
 #include "battery_status.h"
 
@@ -106,13 +131,51 @@ static void battery_status_update_cb(struct battery_state state) {
 }
 
 static struct battery_state battery_status_get_state(const zmk_event_t *eh) {
+    /* ZMK_DISPLAY_WIDGET_LISTENER calls this with eh == NULL at
+     * listener init to fetch the current state. The as_* cast does not
+     * NULL-check eh (it reads eh->event), so guard here first, and
+     * never dereference a NULL cast result. Returning a source outside
+     * the valid range makes the init-time refresh a no-op;
+     * refresh_from_central() below seeds the real levels instead. */
     const struct zmk_peripheral_battery_state_changed *ev =
-        as_zmk_peripheral_battery_state_changed(eh);
+        (eh != NULL) ? as_zmk_peripheral_battery_state_changed(eh) : NULL;
+    if (ev == NULL) {
+        return (struct battery_state){
+            .source = UINT8_MAX,
+            .level = 0,
+        };
+    }
     return (struct battery_state){
         .source = ev->source,
         .level = ev->state_of_charge,
     };
 }
+
+#if IS_ENABLED(CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING)
+
+/* Pull the levels the central has already fetched over BAS and stored
+ * (app/src/split/central.c). A stored 0 means "disconnected or never
+ * received", which set_battery_state() renders as "---", matching the
+ * event path. This makes the display independent of whether the
+ * one-shot battery event was raised before the display initialized. */
+static void refresh_from_central(void) {
+    for (uint8_t source = 0; source < ZMK_SPLIT_BLE_PERIPHERAL_COUNT; source++) {
+        uint8_t level = 0;
+        if (zmk_split_central_get_peripheral_battery_level(source, &level) == 0) {
+            set_battery_state((struct battery_state){.source = source, .level = level});
+        }
+    }
+}
+
+static struct k_work_delayable battery_poll_work;
+
+static void battery_poll_handler(struct k_work *work) {
+    ARG_UNUSED(work);
+    refresh_from_central();
+    k_work_schedule_for_queue(zmk_display_work_q(), &battery_poll_work, K_SECONDS(10));
+}
+
+#endif /* IS_ENABLED(CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING) */
 
 ZMK_DISPLAY_WIDGET_LISTENER(widget_roba_battery_status, struct battery_state,
                             battery_status_update_cb, battery_status_get_state)
@@ -134,6 +197,16 @@ int zmk_widget_roba_battery_status_init(struct zmk_widget_roba_battery_status *w
     sys_slist_append(&widgets, &widget->node);
 
     widget_roba_battery_status_init();
+
+#if IS_ENABLED(CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING)
+    /* Seed from the central's stored levels (covers peripherals that
+     * connected and were read before the display came up), then keep
+     * re-checking on the display work queue so a missed event can
+     * never latch "---" again. */
+    refresh_from_central();
+    k_work_init_delayable(&battery_poll_work, battery_poll_handler);
+    k_work_schedule_for_queue(zmk_display_work_q(), &battery_poll_work, K_SECONDS(10));
+#endif
 
     return 0;
 }

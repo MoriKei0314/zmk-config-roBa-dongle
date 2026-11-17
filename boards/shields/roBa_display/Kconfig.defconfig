@@ -19,7 +19,12 @@ config ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
     select LV_USE_ANIMATION
     select LV_USE_LINE
     select LV_FONT_UNSCII_8
-    select LV_FONT_MONTSERRAT_20
+    select LV_FONT_MONTSERRAT_16
+    select ZMK_WPM
+
+config ZMK_ROBA_DISPLAY_BONGO_CAT
+    bool "Display the Bongo Cat widget"
+    default y
 
 config ZMK_ROBA_DISPLAY_LAYER
     bool "Display the layer name widget"

@@ -4,28 +4,29 @@
  * SPDX-License-Identifier: MIT
  *
  * Custom status screen for the roBa dongle (128x64, monochrome).
- * Layout (clarity first):
+ * Layout:
  *
- *   y=0        [output status: USB/BT]        [L  95%]
+ *   y=0..18    [output status: USB/BT]        [L  95%]
  *                                             [R  43%]
- *   y=26       [layer name, Montserrat 20, centered, full width]
+ *   y=21       [layer name, Montserrat 16, centered, full width]
  *
- *   y=56       [modifiers, small text]
+ *   y=38..64   [Bongo Cat, 50x26]             [modifiers, small text]
  *
  * The battery rows are always visible; a side that has not reported
  * yet or is disconnected shows "L ---" / "R ---".
  *
- * There is intentionally no decorative image widget (the englmaxi
- * module's Bongo Cat) in this version: the space is spent on legible
- * battery and layer readouts. To add an image later, create a widget
- * under widgets/ and place it in the free area (e.g. bottom-right)
- * from zmk_display_status_screen() below.
+ * The Bongo Cat (from the englmaxi module, WPM-animated) returned on
+ * 2026-11-17 at the user's request ("not cute enough" without it).
+ * It sits bottom-left; the modifiers moved to bottom-right, and the
+ * layer font went 20 -> 16 so every element keeps its own band:
+ * 18 (top rows) + 16 (layer) + 26 (cat) = 60 of 64 px, no overlap.
  *
  * Based on englmaxi/zmk-dongle-display (MIT).
  */
 
 #include "custom_status_screen.h"
 #include "widgets/battery_status.h"
+#include "widgets/bongo_cat.h"
 #include "widgets/layer_status.h"
 #include "widgets/modifiers.h"
 #include "widgets/output_status.h"
@@ -37,6 +38,10 @@ static struct zmk_widget_output_status output_status_widget;
 
 #if IS_ENABLED(CONFIG_ZMK_BATTERY)
 static struct zmk_widget_roba_battery_status battery_status_widget;
+#endif
+
+#if IS_ENABLED(CONFIG_ZMK_ROBA_DISPLAY_BONGO_CAT)
+static struct zmk_widget_bongo_cat bongo_cat_widget;
 #endif
 
 #if IS_ENABLED(CONFIG_ZMK_ROBA_DISPLAY_LAYER)
@@ -73,15 +78,22 @@ lv_obj_t *zmk_display_status_screen() {
 #endif
 
 #if IS_ENABLED(CONFIG_ZMK_ROBA_DISPLAY_LAYER)
-    /* Center: layer name, large. */
+    /* Center band: layer name, large (Montserrat 16). */
     zmk_widget_roba_layer_status_init(&layer_status_widget, screen);
-    lv_obj_align(zmk_widget_roba_layer_status_obj(&layer_status_widget), LV_ALIGN_TOP_LEFT, 0, 26);
+    lv_obj_align(zmk_widget_roba_layer_status_obj(&layer_status_widget), LV_ALIGN_TOP_LEFT, 0, 21);
+#endif
+
+#if IS_ENABLED(CONFIG_ZMK_ROBA_DISPLAY_BONGO_CAT)
+    /* Bottom-left: Bongo Cat (50x26, WPM-animated). */
+    zmk_widget_bongo_cat_init(&bongo_cat_widget, screen);
+    lv_obj_align(zmk_widget_bongo_cat_obj(&bongo_cat_widget), LV_ALIGN_BOTTOM_LEFT, 2, 0);
 #endif
 
 #if IS_ENABLED(CONFIG_ZMK_ROBA_DISPLAY_MODIFIERS)
-    /* Bottom-left: held modifiers as small text. */
+    /* Bottom-right: held modifiers as small text (moved from
+     * bottom-left to make room for the cat). */
     zmk_widget_roba_modifiers_init(&modifiers_widget, screen);
-    lv_obj_align(zmk_widget_roba_modifiers_obj(&modifiers_widget), LV_ALIGN_BOTTOM_LEFT, 0, 0);
+    lv_obj_align(zmk_widget_roba_modifiers_obj(&modifiers_widget), LV_ALIGN_BOTTOM_RIGHT, 0, 0);
 #endif
 
     return screen;

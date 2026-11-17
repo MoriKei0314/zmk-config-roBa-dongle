@@ -5,8 +5,11 @@
  *
  * Based on englmaxi/zmk-dongle-display widgets/layer_status.c (MIT).
  * Differences from the original:
- *  - Large font (Montserrat 20) and full-width, center aligned: the
+ *  - Large font (Montserrat 16) and full-width, center aligned: the
  *    layer name is the most prominent element of this screen.
+ *    (Was Montserrat 20 until 2026-11-17; 16 leaves a clean band for
+ *    the returning Bongo Cat below: 18px top rows + 16px layer +
+ *    26px cat = 60px of the 64px panel, with no overlap.)
  *  - If the layer has no name (the keymap layer has neither a
  *    display-name nor a label property, so zmk_keymap_layer_name()
  *    returns ""), the layer index number is shown instead of an
@@ -62,7 +65,7 @@ int zmk_widget_roba_layer_status_init(struct zmk_widget_roba_layer_status *widge
                                       lv_obj_t *parent) {
     widget->obj = lv_label_create(parent);
     lv_obj_set_width(widget->obj, 128); /* full width of the 128x64 panel */
-    lv_obj_set_style_text_font(widget->obj, &lv_font_montserrat_20, LV_PART_MAIN);
+    lv_obj_set_style_text_font(widget->obj, &lv_font_montserrat_16, LV_PART_MAIN);
     lv_obj_set_style_text_align(widget->obj, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
     lv_label_set_long_mode(widget->obj, LV_LABEL_LONG_SCROLL_CIRCULAR);
 
